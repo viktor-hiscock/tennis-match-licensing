@@ -39,6 +39,22 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.29</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -47,6 +63,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+<!--            <plugin>-->
+<!--                <groupId>org.flywaydb</groupId>-->
+<!--                <artifactId>flyway-maven-plugin</artifactId>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 </project>

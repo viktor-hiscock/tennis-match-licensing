@@ -4,3 +4,7 @@ spring:
     url: jdbc:mysql://localhost:3306/licensed_tennis_matches
     username: local_dev
     password: imgarena
+  flyway:
+    user: local_dev
+    password: imgarena
+    schemas: licensed_tennis_matches

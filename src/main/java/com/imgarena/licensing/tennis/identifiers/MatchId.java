@@ -1,4 +1,7 @@
 package com.imgarena.licensing.tennis.identifiers;
 
-public record MatchId(String value) {
+import java.io.Serializable;
+import java.util.UUID;
+
+public record MatchId(UUID identifier) implements Serializable {
 }
