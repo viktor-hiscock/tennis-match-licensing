@@ -1,6 +1,6 @@
 package com.imgarena.licensing.tennis.service;
 
-import com.imgarena.licensing.tennis.model.TennisMatchLicenseEntity;
+import com.imgarena.licensing.tennis.entity.TennisMatchLicenseEntity;
 import com.imgarena.licensing.tennis.repository.TennisMatchLicenseRepository;
 import org.springframework.stereotype.Service;
 

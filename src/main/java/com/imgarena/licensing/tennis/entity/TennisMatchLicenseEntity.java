@@ -1,7 +1,7 @@
-package com.imgarena.licensing.tennis.model;
+package com.imgarena.licensing.tennis.entity;
 
 import com.imgarena.licensing.tennis.identifiers.CustomerId;
-import com.imgarena.licensing.tennis.model.converter.CustomerIdConverter;
+import com.imgarena.licensing.tennis.entity.converter.CustomerIdConverter;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

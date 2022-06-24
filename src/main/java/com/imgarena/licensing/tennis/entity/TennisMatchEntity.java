@@ -1,7 +1,7 @@
-package com.imgarena.licensing.tennis.model;
+package com.imgarena.licensing.tennis.entity;
 
 import com.imgarena.licensing.tennis.identifiers.MatchId;
-import com.imgarena.licensing.tennis.model.converter.MatchIdConverter;
+import com.imgarena.licensing.tennis.entity.converter.MatchIdConverter;
 
 import javax.persistence.Convert;
 import javax.persistence.Entity;
