@@ -1,7 +1,7 @@
-package com.imgarena.licensing.tennis.entity;
+package com.imgarena.licensing.tennis.model;
 
 import com.imgarena.licensing.tennis.identifiers.MatchId;
-import com.imgarena.licensing.tennis.entity.converter.MatchIdConverter;
+import com.imgarena.licensing.tennis.model.converter.MatchIdConverter;
 
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -13,7 +13,7 @@ import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = TableNames.TENNIS_MATCH)
-public class TennisMatchEntity {
+public class TennisMatch {
     @Id
     @Convert(converter = MatchIdConverter.class)
     private MatchId id;
@@ -22,9 +22,9 @@ public class TennisMatchEntity {
 
     @OneToOne
     @JoinColumn(name = "TENNIS_PLAYER_A_ID", referencedColumnName = "ID")
-    private TennisPlayerEntity playerA;
+    private TennisPlayer playerA;
 
     @OneToOne
     @JoinColumn(name = "TENNIS_PLAYER_B_ID", referencedColumnName = "ID")
-    private TennisPlayerEntity playerB;
+    private TennisPlayer playerB;
 }

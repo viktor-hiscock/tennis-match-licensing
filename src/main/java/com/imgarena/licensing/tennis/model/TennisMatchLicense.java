@@ -1,7 +1,7 @@
-package com.imgarena.licensing.tennis.entity;
+package com.imgarena.licensing.tennis.model;
 
 import com.imgarena.licensing.tennis.identifiers.CustomerId;
-import com.imgarena.licensing.tennis.entity.converter.CustomerIdConverter;
+import com.imgarena.licensing.tennis.model.converter.CustomerIdConverter;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +17,7 @@ import java.util.UUID;
 @Table(name = TableNames.TENNIS_MATCH_LICENSE)
 @Data
 @NoArgsConstructor
-public class TennisMatchLicenseEntity {
+public class TennisMatchLicense {
     @Id
     private UUID id;
 
@@ -26,5 +26,5 @@ public class TennisMatchLicenseEntity {
 
     @OneToOne
     @JoinColumn(name = "TENNIS_MATCH_ID", referencedColumnName = "ID")
-    private TennisMatchEntity tennisMatch;
+    private TennisMatch tennisMatch;
 }

@@ -1,4 +1,4 @@
-package com.imgarena.licensing.tennis.entity.converter;
+package com.imgarena.licensing.tennis.model.converter;
 
 import com.imgarena.licensing.tennis.identifiers.MatchId;
 

@@ -1,4 +1,4 @@
-package com.imgarena.licensing.tennis.entity;
+package com.imgarena.licensing.tennis.model;
 
 public class TableNames {
     public static final String TENNIS_MATCH_LICENSE = "TENNIS_MATCH_LICENSE";
