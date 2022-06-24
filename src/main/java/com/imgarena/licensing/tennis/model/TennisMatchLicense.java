@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.UUID;
 
 @Entity
 @Table(name = TableNames.TENNIS_MATCH_LICENSE)
@@ -19,7 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class TennisMatchLicense {
     @Id
-    private UUID id;
+    private Long id;
 
     @Convert(converter = CustomerIdConverter.class)
     private CustomerId customerId;

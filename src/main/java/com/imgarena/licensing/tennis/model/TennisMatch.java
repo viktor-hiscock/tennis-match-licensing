@@ -1,6 +1,5 @@
 package com.imgarena.licensing.tennis.model;
 
-import com.imgarena.licensing.tennis.identifiers.MatchId;
 import com.imgarena.licensing.tennis.model.converter.MatchIdConverter;
 
 import javax.persistence.Convert;
@@ -16,7 +15,7 @@ import java.time.ZonedDateTime;
 public class TennisMatch {
     @Id
     @Convert(converter = MatchIdConverter.class)
-    private MatchId id;
+    private Long id;
 
     private ZonedDateTime startDate;
 
