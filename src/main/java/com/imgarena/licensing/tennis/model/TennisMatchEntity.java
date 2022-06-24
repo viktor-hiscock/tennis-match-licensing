@@ -13,7 +13,7 @@ import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = TableNames.TENNIS_MATCH)
-public class TennisMatch {
+public class TennisMatchEntity {
     @Id
     @Convert(converter = MatchIdConverter.class)
     private MatchId id;
@@ -22,9 +22,9 @@ public class TennisMatch {
 
     @OneToOne
     @JoinColumn(name = "TENNIS_PLAYER_A_ID", referencedColumnName = "ID")
-    private TennisPlayer playerA;
+    private TennisPlayerEntity playerA;
 
     @OneToOne
     @JoinColumn(name = "TENNIS_PLAYER_B_ID", referencedColumnName = "ID")
-    private TennisPlayer playerB;
+    private TennisPlayerEntity playerB;
 }

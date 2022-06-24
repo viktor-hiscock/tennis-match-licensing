@@ -17,7 +17,7 @@ import java.util.UUID;
 @Table(name = TableNames.TENNIS_MATCH_LICENSE)
 @Data
 @NoArgsConstructor
-public class TennisMatchLicense {
+public class TennisMatchLicenseEntity {
     @Id
     private UUID id;
 
@@ -26,5 +26,5 @@ public class TennisMatchLicense {
 
     @OneToOne
     @JoinColumn(name = "TENNIS_MATCH_ID", referencedColumnName = "ID")
-    private TennisMatch tennisMatch;
+    private TennisMatchEntity tennisMatch;
 }

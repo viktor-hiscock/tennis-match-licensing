@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = TableNames.TENNIS_PLAYER)
-public class TennisPlayer {
+public class TennisPlayerEntity {
     @Id
     @Convert(converter = TennisPlayerConverter.class)
     private TennisPlayerId id;
