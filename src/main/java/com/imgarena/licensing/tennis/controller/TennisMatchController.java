@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -53,5 +56,17 @@ public class TennisMatchController {
         TennisMatch deletedTennisMatch = tennisMatchService.deleteTennisMatch(new MatchId(matchId));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(TennisMatchMapper.convertToTennisMatchResponseDTO(deletedTennisMatch));
+    }
+
+    @GetMapping("v1/tennis/match")
+    public ResponseEntity<List<TennisMatchResponseDTO>> getAllTennisMatches(
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "id") String sortBy
+    ) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(tennisMatchService.getAllTennisMatches(pageNumber, pageSize, sortBy).stream()
+                        .map(TennisMatchMapper::convertToTennisMatchResponseDTO)
+                        .collect(Collectors.toList()));
     }
 }

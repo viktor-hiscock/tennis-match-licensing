@@ -9,11 +9,17 @@ import com.imgarena.licensing.tennis.model.TennisMatch;
 import com.imgarena.licensing.tennis.model.TennisPlayer;
 import com.imgarena.licensing.tennis.repository.TennisMatchRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,5 +69,16 @@ public class TennisMatchService {
             throw new TennisMatchNotFoundException(matchId);
         }
         return tennisMatchToDelete.get();
+    }
+
+    public List<TennisMatch> getAllTennisMatches(int pageNumber, int pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
+        Page<TennisMatch> pagedResult = tennisMatchRepository.findAll(paging);
+
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<>();
+        }
     }
 }
