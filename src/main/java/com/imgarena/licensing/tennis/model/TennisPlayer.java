@@ -28,12 +28,4 @@ public class TennisPlayer {
     private String firstName;
 
     private String lastName;
-
-    public TennisPlayer merge(TennisPlayer tennisPlayer) {
-        return TennisPlayer.builder()
-                .id(id)
-                .firstName(Optional.ofNullable(tennisPlayer.getFirstName()).orElse(firstName))
-                .lastName(Optional.ofNullable(tennisPlayer.getLastName()).orElse(lastName))
-                .build();
-    }
 }
