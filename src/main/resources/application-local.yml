@@ -8,3 +8,8 @@ spring:
     user: local_dev
     password: imgarena
     schemas: licensed_tennis_matches
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always

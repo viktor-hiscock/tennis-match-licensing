@@ -1,20 +1,21 @@
 package com.imgarena.licensing.tennis.mapper;
 
-import com.imgarena.licensing.tennis.dto.TennisPlayerDTO;
+import com.imgarena.licensing.tennis.dto.CreateTennisPlayerRequestDTO;
+import com.imgarena.licensing.tennis.dto.TennisPlayerResponseDTO;
 import com.imgarena.licensing.tennis.identifiers.TennisPlayerId;
 import com.imgarena.licensing.tennis.model.TennisPlayer;
 
 public class TennisPlayerMapper {
-    public static TennisPlayer convertToTennisPlayer(TennisPlayerDTO tennisPlayerDTO) {
+    public static TennisPlayer convertToTennisPlayer(CreateTennisPlayerRequestDTO createTennisPlayerRequestDTO) {
         return TennisPlayer.builder()
-                .tennisPlayerId(new TennisPlayerId(tennisPlayerDTO.getTennisPlayerId()))
-                .firstName(tennisPlayerDTO.getFirstName())
-                .lastName(tennisPlayerDTO.getLastName())
+                .tennisPlayerId(new TennisPlayerId(createTennisPlayerRequestDTO.getTennisPlayerId()))
+                .firstName(createTennisPlayerRequestDTO.getFirstName())
+                .lastName(createTennisPlayerRequestDTO.getLastName())
                 .build();
     }
 
-    public static TennisPlayerDTO convertToTennisPlayerDTO(TennisPlayer tennisPlayer) {
-        return TennisPlayerDTO.builder()
+    public static TennisPlayerResponseDTO convertToTennisPlayerResponseDTO(TennisPlayer tennisPlayer) {
+        return TennisPlayerResponseDTO.builder()
                 .tennisPlayerId(tennisPlayer.getTennisPlayerId().identifier())
                 .firstName(tennisPlayer.getFirstName())
                 .lastName(tennisPlayer.getLastName())

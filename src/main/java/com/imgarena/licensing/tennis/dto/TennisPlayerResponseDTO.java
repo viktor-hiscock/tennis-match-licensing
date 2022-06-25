@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class TennisPlayerDTO {
+public class TennisPlayerResponseDTO {
     private final String tennisPlayerId;
     private final String firstName;
     private final String lastName;
