@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -22,6 +23,7 @@ import java.time.ZoneId;
 @Entity
 @Table(name = TableNames.TENNIS_MATCH)
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -45,4 +47,15 @@ public class TennisMatch {
     @OneToOne
     @JoinColumn(name = "TENNIS_PLAYER_B_ID", referencedColumnName = "ID")
     private TennisPlayer playerB;
+
+    public TennisMatch merge(TennisMatch tennisMatch) {
+        return TennisMatch.builder()
+                .id(id)
+                .matchId(matchId)
+                .playerA(tennisMatch.getPlayerA())
+                .playerB(tennisMatch.getPlayerB())
+                .startDate(tennisMatch.getStartDate())
+                .zoneId(tennisMatch.getZoneId())
+                .build();
+    }
 }

@@ -2,6 +2,7 @@ package com.imgarena.licensing.tennis.controller;
 
 import com.imgarena.licensing.tennis.dto.CreateTennisMatchRequestDTO;
 import com.imgarena.licensing.tennis.dto.TennisMatchResponseDTO;
+import com.imgarena.licensing.tennis.dto.UpdateTennisMatchRequestDTO;
 import com.imgarena.licensing.tennis.identifiers.MatchId;
 import com.imgarena.licensing.tennis.mapper.TennisMatchMapper;
 import com.imgarena.licensing.tennis.model.TennisMatch;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,5 +35,15 @@ public class TennisMatchController {
         TennisMatch createdTennisMatch = tennisMatchService.createTennisMatch(createTennisMatchRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(TennisMatchMapper.convertToTennisMatchResponseDTO(createdTennisMatch));
+    }
+
+    @PutMapping("v1/tennis/match/{matchId}")
+    public ResponseEntity<TennisMatchResponseDTO> updateTennisMatch(
+            @PathVariable("matchId") String matchId,
+            @RequestBody @Valid UpdateTennisMatchRequestDTO updateTennisMatchRequestDTO
+    ) {
+        TennisMatch updatedTennisMatch = tennisMatchService.updateTennisMatch(new MatchId(matchId), updateTennisMatchRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(TennisMatchMapper.convertToTennisMatchResponseDTO(updatedTennisMatch));
     }
 }
