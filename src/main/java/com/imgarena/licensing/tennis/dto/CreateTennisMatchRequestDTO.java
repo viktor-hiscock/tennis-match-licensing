@@ -18,8 +18,8 @@ public class CreateTennisMatchRequestDTO {
     private StartDateDTO startDate;
 
     @IMGArenaId
-    private String tennisPlayerAId;
+    private Long tennisPlayerAId;
 
     @IMGArenaId
-    private String tennisPlayerBId;
+    private Long tennisPlayerBId;
 }

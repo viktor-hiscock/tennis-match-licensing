@@ -4,7 +4,6 @@ import com.imgarena.licensing.tennis.dto.CreateTennisMatchRequestDTO;
 import com.imgarena.licensing.tennis.dto.UpdateTennisMatchRequestDTO;
 import com.imgarena.licensing.tennis.exception.TennisMatchNotFoundException;
 import com.imgarena.licensing.tennis.identifiers.MatchId;
-import com.imgarena.licensing.tennis.identifiers.TennisPlayerId;
 import com.imgarena.licensing.tennis.model.TennisMatch;
 import com.imgarena.licensing.tennis.model.TennisPlayer;
 import com.imgarena.licensing.tennis.repository.TennisMatchRepository;
@@ -34,8 +33,8 @@ public class TennisMatchService {
     }
 
     public TennisMatch createTennisMatch(CreateTennisMatchRequestDTO createTennisMatchRequestDTO) {
-        TennisPlayer tennisPlayerA = tennisPlayerService.getTennisPlayer(new TennisPlayerId(createTennisMatchRequestDTO.getTennisPlayerAId()));
-        TennisPlayer tennisPlayerB = tennisPlayerService.getTennisPlayer(new TennisPlayerId(createTennisMatchRequestDTO.getTennisPlayerBId()));
+        TennisPlayer tennisPlayerA = tennisPlayerService.getTennisPlayer(createTennisMatchRequestDTO.getTennisPlayerAId());
+        TennisPlayer tennisPlayerB = tennisPlayerService.getTennisPlayer(createTennisMatchRequestDTO.getTennisPlayerAId());
         TennisMatch newTennisMatch = TennisMatch.builder()
                 .matchId(new MatchId(createTennisMatchRequestDTO.getMatchId()))
                 .playerA(tennisPlayerA)
@@ -52,8 +51,8 @@ public class TennisMatchService {
     public TennisMatch updateTennisMatch(MatchId matchId, UpdateTennisMatchRequestDTO updateTennisMatchRequestDTO) {
         TennisMatch managedTennisMatch = tennisMatchRepository.findByMatchId(matchId)
                 .orElseThrow(() -> new TennisMatchNotFoundException(matchId));
-        managedTennisMatch.setPlayerA(tennisPlayerService.getTennisPlayer(new TennisPlayerId(updateTennisMatchRequestDTO.getTennisPlayerAId())));
-        managedTennisMatch.setPlayerB(tennisPlayerService.getTennisPlayer(new TennisPlayerId(updateTennisMatchRequestDTO.getTennisPlayerBId())));
+        managedTennisMatch.setPlayerA(tennisPlayerService.getTennisPlayer(updateTennisMatchRequestDTO.getTennisPlayerAId()));
+        managedTennisMatch.setPlayerB(tennisPlayerService.getTennisPlayer(updateTennisMatchRequestDTO.getTennisPlayerBId()));
         managedTennisMatch.setStartDate(LocalDateTime.parse(updateTennisMatchRequestDTO.getStartDate().getTimestamp()));
         managedTennisMatch.setZoneId(Optional.ofNullable(updateTennisMatchRequestDTO.getStartDate().getZoneId())
                 .map(ZoneId::of)

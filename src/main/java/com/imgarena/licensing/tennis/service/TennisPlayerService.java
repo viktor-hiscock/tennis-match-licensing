@@ -1,7 +1,8 @@
 package com.imgarena.licensing.tennis.service;
 
+import com.imgarena.licensing.tennis.dto.CreateTennisPlayerRequestDTO;
+import com.imgarena.licensing.tennis.dto.UpdateTennisPlayerRequestDTO;
 import com.imgarena.licensing.tennis.exception.TennisPlayerNotFoundException;
-import com.imgarena.licensing.tennis.identifiers.TennisPlayerId;
 import com.imgarena.licensing.tennis.model.TennisPlayer;
 import com.imgarena.licensing.tennis.repository.TennisPlayerRepository;
 import lombok.AllArgsConstructor;
@@ -19,19 +20,26 @@ import java.util.List;
 public class TennisPlayerService {
     private final TennisPlayerRepository tennisPlayerRepository;
 
-    public TennisPlayer getTennisPlayer(TennisPlayerId tennisPlayerId) {
-        return tennisPlayerRepository.findByTennisPlayerId(tennisPlayerId)
+    public TennisPlayer getTennisPlayer(Long tennisPlayerId) {
+        return tennisPlayerRepository.findById(tennisPlayerId)
                 .orElseThrow(() -> new TennisPlayerNotFoundException(tennisPlayerId));
     }
 
-    public TennisPlayer createTennisPlayer(TennisPlayer tennisPlayer) {
-        return tennisPlayerRepository.save(tennisPlayer);
+    public TennisPlayer createTennisPlayer(CreateTennisPlayerRequestDTO createTennisPlayerRequestDTO) {
+        TennisPlayer newTennisPlayer = TennisPlayer.builder()
+                .firstName(createTennisPlayerRequestDTO.getFirstName())
+                .lastName(createTennisPlayerRequestDTO.getLastName())
+                .build();
+        return tennisPlayerRepository.save(newTennisPlayer);
     }
 
-    public TennisPlayer updateTennisPlayer(TennisPlayer tennisPlayer) {
-        return tennisPlayerRepository.findByTennisPlayerId(tennisPlayer.getTennisPlayerId())
-                .map(foundTennisPlayer -> foundTennisPlayer.merge(tennisPlayer))
-                .orElseThrow(() -> new TennisPlayerNotFoundException(tennisPlayer.getTennisPlayerId()));
+    public TennisPlayer updateTennisPlayer(Long tennisPlayerId, UpdateTennisPlayerRequestDTO updateTennisPlayerRequestDTO) {
+        TennisPlayer currentTennisPlayer = tennisPlayerRepository.findById(tennisPlayerId)
+                .orElseThrow(() -> new TennisPlayerNotFoundException(tennisPlayerId));
+        currentTennisPlayer.setFirstName(updateTennisPlayerRequestDTO.getFirstName());
+        currentTennisPlayer.setLastName(updateTennisPlayerRequestDTO.getLastName());
+        tennisPlayerRepository.save(currentTennisPlayer);
+        return currentTennisPlayer;
     }
 
     public List<TennisPlayer> getAllTennisPlayers(int pageNumber, int pageSize, String sortBy) {

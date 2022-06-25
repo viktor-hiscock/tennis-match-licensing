@@ -3,7 +3,6 @@ package com.imgarena.licensing.tennis.controller;
 import com.imgarena.licensing.tennis.dto.CreateTennisPlayerRequestDTO;
 import com.imgarena.licensing.tennis.dto.TennisPlayerResponseDTO;
 import com.imgarena.licensing.tennis.dto.UpdateTennisPlayerRequestDTO;
-import com.imgarena.licensing.tennis.identifiers.TennisPlayerId;
 import com.imgarena.licensing.tennis.mapper.TennisPlayerMapper;
 import com.imgarena.licensing.tennis.model.TennisPlayer;
 import com.imgarena.licensing.tennis.service.TennisPlayerService;
@@ -28,14 +27,14 @@ public class TennisPlayerController {
     private final TennisPlayerService tennisPlayerService;
 
     @GetMapping("v1/tennis/player/{tennisPlayerId}")
-    public ResponseEntity<TennisPlayerResponseDTO> getTennisPlayer(@PathVariable("tennisPlayerId") String tennisPlayerId) {
-        TennisPlayer foundTennisPlayer = tennisPlayerService.getTennisPlayer(new TennisPlayerId(tennisPlayerId));
+    public ResponseEntity<TennisPlayerResponseDTO> getTennisPlayer(@PathVariable("tennisPlayerId") Long tennisPlayerId) {
+        TennisPlayer foundTennisPlayer = tennisPlayerService.getTennisPlayer(tennisPlayerId);
         return ResponseEntity.ok(TennisPlayerMapper.convertToTennisPlayerResponseDTO(foundTennisPlayer));
     }
 
     @PostMapping("v1/tennis/player")
     public ResponseEntity<TennisPlayerResponseDTO> createTennisPlayer(@RequestBody @Valid CreateTennisPlayerRequestDTO createTennisPlayerRequestDTO) {
-        TennisPlayer newTennisPlayer = tennisPlayerService.createTennisPlayer(TennisPlayerMapper.convertToTennisPlayer(createTennisPlayerRequestDTO));
+        TennisPlayer newTennisPlayer = tennisPlayerService.createTennisPlayer(createTennisPlayerRequestDTO);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(TennisPlayerMapper.convertToTennisPlayerResponseDTO(newTennisPlayer));
@@ -43,10 +42,10 @@ public class TennisPlayerController {
 
     @PutMapping("v1/tennis/player/{tennisPlayerId}")
     public ResponseEntity<TennisPlayerResponseDTO> updateTennisPlayer(
-            @PathVariable(value = "tennisPlayerId") String tennisPlayerId,
+            @PathVariable(value = "tennisPlayerId") Long tennisPlayerId,
             @RequestBody @Valid UpdateTennisPlayerRequestDTO updateTennisPlayerRequestDTO
     ) {
-        TennisPlayer updatedTennisPlayer = tennisPlayerService.updateTennisPlayer(TennisPlayerMapper.convertToTennisPlayer(new TennisPlayerId(tennisPlayerId), updateTennisPlayerRequestDTO));
+        TennisPlayer updatedTennisPlayer = tennisPlayerService.updateTennisPlayer(tennisPlayerId, updateTennisPlayerRequestDTO);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(TennisPlayerMapper.convertToTennisPlayerResponseDTO(updatedTennisPlayer));

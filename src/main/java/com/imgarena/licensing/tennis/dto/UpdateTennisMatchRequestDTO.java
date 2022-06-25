@@ -1,6 +1,5 @@
 package com.imgarena.licensing.tennis.dto;
 
-import com.imgarena.licensing.tennis.dto.validation.IMGArenaId;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,9 +13,7 @@ public class UpdateTennisMatchRequestDTO {
     @NotNull
     private StartDateDTO startDate;
 
-    @IMGArenaId
-    private String tennisPlayerAId;
+    private Long tennisPlayerAId;
 
-    @IMGArenaId
-    private String tennisPlayerBId;
+    private Long tennisPlayerBId;
 }

@@ -1,3 +1,8 @@
+DROP TABLE IF EXISTS tennis_match_license;
+DROP TABLE IF EXISTS tennis_match;
+DROP TABLE IF EXISTS tennis_player;
+DROP TABLE IF EXISTS customer;
+
 CREATE TABLE customer (
     id INT NOT NULL AUTO_INCREMENT,
     customer_id VARCHAR(100) UNIQUE NOT NULL,
@@ -10,7 +15,6 @@ CREATE TABLE customer (
 
 CREATE TABLE tennis_player (
     id INT NOT NULL AUTO_INCREMENT,
-    tennis_player_id VARCHAR(100) UNIQUE NOT NULL,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     PRIMARY KEY (id)
