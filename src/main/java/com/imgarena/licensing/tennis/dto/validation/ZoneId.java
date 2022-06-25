@@ -10,9 +10,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({FIELD})
 @Retention(RUNTIME)
-@Constraint(validatedBy = {TimezoneValidator.class})
-public @interface Timezone {
-    String message() default "Not a valid timezone";
+@Constraint(validatedBy = {ZoneIdValidator.class})
+public @interface ZoneId {
+    String message() default "Not a valid zoneId";
 
     Class<?>[] groups() default {};
 

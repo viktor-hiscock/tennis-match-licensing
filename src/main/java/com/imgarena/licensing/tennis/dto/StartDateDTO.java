@@ -1,7 +1,7 @@
 package com.imgarena.licensing.tennis.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.imgarena.licensing.tennis.dto.validation.Timezone;
+import com.imgarena.licensing.tennis.dto.validation.ZoneId;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,6 +12,6 @@ public class StartDateDTO {
 
     @JsonFormat(pattern = TIMESTAMP_PATTERN)
     private String timestamp;
-    @Timezone
+    @ZoneId
     private String zoneId;
 }
