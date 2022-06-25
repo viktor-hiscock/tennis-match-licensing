@@ -20,4 +20,10 @@ public class TennisPlayerService {
     public TennisPlayer createTennisPlayer(TennisPlayer tennisPlayer) {
         return tennisPlayerRepository.save(tennisPlayer);
     }
+
+    public TennisPlayer updateTennisPlayer(TennisPlayer tennisPlayer) {
+        return tennisPlayerRepository.findByTennisPlayerId(tennisPlayer.getTennisPlayerId())
+                .map(foundTennisPlayer -> foundTennisPlayer.merge(tennisPlayer))
+                .orElseThrow(() -> new TennisPlayerNotFoundException(tennisPlayer.getTennisPlayerId()));
+    }
 }

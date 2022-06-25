@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Optional;
 
 @Entity
 @Table(name = TableNames.TENNIS_PLAYER)
@@ -31,4 +32,13 @@ public class TennisPlayer {
     private String firstName;
 
     private String lastName;
+
+    public TennisPlayer merge(TennisPlayer tennisPlayer) {
+        return TennisPlayer.builder()
+                .id(id)
+                .tennisPlayerId(tennisPlayerId)
+                .firstName(Optional.ofNullable(tennisPlayer.getFirstName()).orElse(firstName))
+                .lastName(Optional.ofNullable(tennisPlayer.getLastName()).orElse(lastName))
+                .build();
+    }
 }
