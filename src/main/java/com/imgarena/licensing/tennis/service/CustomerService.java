@@ -3,7 +3,6 @@ package com.imgarena.licensing.tennis.service;
 import com.imgarena.licensing.tennis.dto.CreateCustomerRequestDTO;
 import com.imgarena.licensing.tennis.dto.UpdateCustomerRequestDTO;
 import com.imgarena.licensing.tennis.exception.CustomerNotFoundException;
-import com.imgarena.licensing.tennis.identifiers.CustomerId;
 import com.imgarena.licensing.tennis.model.Customer;
 import com.imgarena.licensing.tennis.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
@@ -23,14 +22,13 @@ import java.util.Optional;
 public class CustomerService {
     private final CustomerRepository customerRepository;
 
-    public Customer getCustomer(CustomerId customerId) {
-        return customerRepository.findByCustomerId(customerId)
+    public Customer getCustomer(Long customerId) {
+        return customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(customerId));
     }
 
     public Customer createCustomer(CreateCustomerRequestDTO createCustomerRequestDTO) {
         Customer newCustomer = Customer.builder()
-                .customerId(new CustomerId(createCustomerRequestDTO.getCustomerId()))
                 .firstName(createCustomerRequestDTO.getFirstName())
                 .lastName(createCustomerRequestDTO.getLastName())
                 .dateOfBirth(LocalDate.parse(createCustomerRequestDTO.getDateOfBirth()))
@@ -38,8 +36,8 @@ public class CustomerService {
         return customerRepository.save(newCustomer);
     }
 
-    public Customer updateCustomer(CustomerId customerId, UpdateCustomerRequestDTO updateCustomerRequestDTO) {
-        Customer currentCustomer = customerRepository.findByCustomerId(customerId)
+    public Customer updateCustomer(Long customerId, UpdateCustomerRequestDTO updateCustomerRequestDTO) {
+        Customer currentCustomer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(customerId));
         currentCustomer.setFirstName(updateCustomerRequestDTO.getFirstName());
         currentCustomer.setLastName(updateCustomerRequestDTO.getLastName());
@@ -47,8 +45,8 @@ public class CustomerService {
         return customerRepository.save(currentCustomer);
     }
 
-    public Customer deleteCustomer(CustomerId customerId) {
-        Optional<Customer> customerToDelete = customerRepository.findByCustomerId(customerId);
+    public Customer deleteCustomer(Long customerId) {
+        Optional<Customer> customerToDelete = customerRepository.findById(customerId);
         if (customerToDelete.isPresent()) {
             customerRepository.delete(customerToDelete.get());
         } else {

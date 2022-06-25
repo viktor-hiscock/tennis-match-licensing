@@ -5,7 +5,6 @@ DROP TABLE IF EXISTS customer;
 
 CREATE TABLE customer (
     id INT NOT NULL AUTO_INCREMENT,
-    customer_id VARCHAR(100) UNIQUE NOT NULL,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     date_of_birth DATETIME NOT NULL,

@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 public class CustomerMapper {
     public static CustomerResponseDTO convertToCustomerResponseDTO(Customer customer) {
         return CustomerResponseDTO.builder()
-                .customerId(customer.getCustomerId().identifier())
+                .customerId(customer.getId())
                 .firstName(customer.getFirstName())
                 .lastName(customer.getLastName())
                 .dateOfBirth(customer.getDateOfBirth().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
