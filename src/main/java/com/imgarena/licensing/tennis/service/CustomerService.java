@@ -7,9 +7,15 @@ import com.imgarena.licensing.tennis.identifiers.CustomerId;
 import com.imgarena.licensing.tennis.model.Customer;
 import com.imgarena.licensing.tennis.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -49,5 +55,16 @@ public class CustomerService {
             throw new CustomerNotFoundException(customerId);
         }
         return customerToDelete.get();
+    }
+
+    public List<Customer> getAllCustomers(int pageNumber, int pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
+        Page<Customer> pagedResult = customerRepository.findAll(paging);
+
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<>();
+        }
     }
 }
