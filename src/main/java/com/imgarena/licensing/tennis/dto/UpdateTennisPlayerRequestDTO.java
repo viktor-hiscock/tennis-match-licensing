@@ -10,6 +10,7 @@ public class UpdateTennisPlayerRequestDTO {
     @NotBlank
     @Length(max = 100)
     private String firstName;
+
     @NotBlank
     @Length(max = 100)
     private String lastName;

@@ -9,6 +9,6 @@ public class IMGArenaIdValidator implements ConstraintValidator<IMGArenaId, Stri
 
     @Override
     public boolean isValid(String imgArenaId, ConstraintValidatorContext constraintValidatorContext) {
-        return imgArenaId == null || IMG_ARENA_PATTERN.matcher(imgArenaId).matches();
+        return imgArenaId != null && IMG_ARENA_PATTERN.matcher(imgArenaId).matches();
     }
 }

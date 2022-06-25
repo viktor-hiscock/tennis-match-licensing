@@ -3,16 +3,15 @@ package com.imgarena.licensing.tennis.model.converter;
 import com.imgarena.licensing.tennis.identifiers.MatchId;
 
 import javax.persistence.AttributeConverter;
-import java.util.UUID;
 
-public class MatchIdConverter implements AttributeConverter<MatchId, UUID> {
+public class MatchIdConverter implements AttributeConverter<MatchId, String> {
     @Override
-    public UUID convertToDatabaseColumn(MatchId matchId) {
+    public String convertToDatabaseColumn(MatchId matchId) {
         return matchId.identifier();
     }
 
     @Override
-    public MatchId convertToEntityAttribute(UUID matchId) {
+    public MatchId convertToEntityAttribute(String matchId) {
         return new MatchId(matchId);
     }
 }
