@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -38,5 +39,15 @@ public class CustomerService {
         currentCustomer.setLastName(updateCustomerRequestDTO.getLastName());
         currentCustomer.setDateOfBirth(LocalDate.parse(updateCustomerRequestDTO.getDateOfBirth()));
         return customerRepository.save(currentCustomer);
+    }
+
+    public Customer deleteCustomer(CustomerId customerId) {
+        Optional<Customer> customerToDelete = customerRepository.findByCustomerId(customerId);
+        if (customerToDelete.isPresent()) {
+            customerRepository.delete(customerToDelete.get());
+        } else {
+            throw new CustomerNotFoundException(customerId);
+        }
+        return customerToDelete.get();
     }
 }
