@@ -1,6 +1,7 @@
 package com.imgarena.licensing.tennis.service;
 
 import com.imgarena.licensing.tennis.dto.CreateCustomerRequestDTO;
+import com.imgarena.licensing.tennis.exception.CustomerNotFoundException;
 import com.imgarena.licensing.tennis.identifiers.CustomerId;
 import com.imgarena.licensing.tennis.model.Customer;
 import com.imgarena.licensing.tennis.repository.CustomerRepository;
@@ -13,6 +14,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class CustomerService {
     private final CustomerRepository customerRepository;
+
+    public Customer getCustomer(CustomerId customerId) {
+        return customerRepository.findByCustomerId(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException(customerId));
+    }
 
     public Customer createCustomer(CreateCustomerRequestDTO createCustomerRequestDTO) {
         Customer newCustomer = Customer.builder()
