@@ -54,4 +54,14 @@ public class TennisMatchService {
                 .orElse(ZoneId.of("UTC")));
         return managedTennisMatch;
     }
+
+    public TennisMatch deleteTennisMatch(MatchId matchId) {
+        Optional<TennisMatch> tennisMatchToDelete = tennisMatchRepository.findByMatchId(matchId);
+        if (tennisMatchToDelete.isPresent()) {
+            tennisMatchRepository.delete(tennisMatchToDelete.get());
+        } else {
+            throw new TennisMatchNotFoundException(matchId);
+        }
+        return tennisMatchToDelete.get();
+    }
 }

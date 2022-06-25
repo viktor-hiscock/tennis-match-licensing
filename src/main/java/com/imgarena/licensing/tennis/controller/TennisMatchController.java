@@ -10,6 +10,7 @@ import com.imgarena.licensing.tennis.service.TennisMatchService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,5 +46,12 @@ public class TennisMatchController {
         TennisMatch updatedTennisMatch = tennisMatchService.updateTennisMatch(new MatchId(matchId), updateTennisMatchRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(TennisMatchMapper.convertToTennisMatchResponseDTO(updatedTennisMatch));
+    }
+
+    @DeleteMapping("v1/tennis/match/{matchId}")
+    public ResponseEntity<TennisMatchResponseDTO> deleteTennisMatch(@PathVariable("matchId") String matchId) {
+        TennisMatch deletedTennisMatch = tennisMatchService.deleteTennisMatch(new MatchId(matchId));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(TennisMatchMapper.convertToTennisMatchResponseDTO(deletedTennisMatch));
     }
 }
