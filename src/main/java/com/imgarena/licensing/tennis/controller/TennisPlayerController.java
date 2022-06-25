@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -47,5 +50,17 @@ public class TennisPlayerController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(TennisPlayerMapper.convertToTennisPlayerResponseDTO(updatedTennisPlayer));
+    }
+
+    @GetMapping("v1/tennis/player")
+    public ResponseEntity<List<TennisPlayerResponseDTO>> getAllTennisPlayers(
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "id") String sortBy
+    ) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(tennisPlayerService.getAllTennisPlayers(pageNumber, pageSize, sortBy).stream()
+                                .map(TennisPlayerMapper::convertToTennisPlayerResponseDTO)
+                                .collect(Collectors.toList()));
     }
 }

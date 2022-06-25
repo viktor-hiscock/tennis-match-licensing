@@ -6,9 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface TennisPlayerRepository extends JpaRepository<TennisPlayer, UUID> {
+public interface TennisPlayerRepository extends JpaRepository<TennisPlayer, Long> {
     Optional<TennisPlayer> findByTennisPlayerId(TennisPlayerId tennisPlayerId);
 }
