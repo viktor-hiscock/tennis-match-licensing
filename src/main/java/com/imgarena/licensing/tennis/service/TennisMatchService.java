@@ -33,7 +33,7 @@ public class TennisMatchService {
 
     public TennisMatch createTennisMatch(CreateTennisMatchRequestDTO createTennisMatchRequestDTO) {
         TennisPlayer tennisPlayerA = tennisPlayerService.getTennisPlayer(createTennisMatchRequestDTO.getTennisPlayerAId());
-        TennisPlayer tennisPlayerB = tennisPlayerService.getTennisPlayer(createTennisMatchRequestDTO.getTennisPlayerAId());
+        TennisPlayer tennisPlayerB = tennisPlayerService.getTennisPlayer(createTennisMatchRequestDTO.getTennisPlayerBId());
         TennisMatch newTennisMatch = TennisMatch.builder()
                 .playerA(tennisPlayerA)
                 .playerB(tennisPlayerB)
