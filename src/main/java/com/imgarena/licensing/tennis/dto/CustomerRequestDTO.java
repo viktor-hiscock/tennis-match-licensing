@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class CreateCustomerRequestDTO {
+public class CustomerRequestDTO {
     private static final String DATE_PATTERN = "yyyy-MM-dd";
 
     @NotBlank

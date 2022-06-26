@@ -1,6 +1,6 @@
 package com.imgarena.licensing.tennis.controller;
 
-import com.imgarena.licensing.tennis.dto.CreateCustomerRequestDTO;
+import com.imgarena.licensing.tennis.dto.CustomerRequestDTO;
 import com.imgarena.licensing.tennis.dto.CustomerResponseDTO;
 import com.imgarena.licensing.tennis.mapper.CustomerMapper;
 import com.imgarena.licensing.tennis.model.Customer;
@@ -32,8 +32,8 @@ public class CustomerController {
     }
 
     @PostMapping("v1/customer")
-    public ResponseEntity<CustomerResponseDTO> createCustomer(@RequestBody CreateCustomerRequestDTO createCustomerRequestDTO) {
-        Customer newCustomer = customerService.createCustomer(createCustomerRequestDTO);
+    public ResponseEntity<CustomerResponseDTO> createCustomer(@RequestBody CustomerRequestDTO customerRequestDTO) {
+        Customer newCustomer = customerService.createCustomer(customerRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(CustomerMapper.convertToCustomerResponseDTO(newCustomer));
     }
@@ -41,9 +41,9 @@ public class CustomerController {
     @PutMapping("v1/customer/{customerId}")
     public ResponseEntity<CustomerResponseDTO> updateCustomer(
             @PathVariable("customerId") Long customerId,
-            @RequestBody CreateCustomerRequestDTO createCustomerRequestDTO
+            @RequestBody CustomerRequestDTO customerRequestDTO
     ) {
-        Customer updatedCustomer = customerService.updateCustomer(customerId, createCustomerRequestDTO);
+        Customer updatedCustomer = customerService.updateCustomer(customerId, customerRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(CustomerMapper.convertToCustomerResponseDTO(updatedCustomer));
     }

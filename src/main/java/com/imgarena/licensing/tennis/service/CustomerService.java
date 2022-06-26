@@ -1,6 +1,6 @@
 package com.imgarena.licensing.tennis.service;
 
-import com.imgarena.licensing.tennis.dto.CreateCustomerRequestDTO;
+import com.imgarena.licensing.tennis.dto.CustomerRequestDTO;
 import com.imgarena.licensing.tennis.exception.CustomerNotFoundException;
 import com.imgarena.licensing.tennis.model.Customer;
 import com.imgarena.licensing.tennis.model.TennisMatchLicense;
@@ -31,35 +31,35 @@ public class CustomerService {
                 .orElseThrow(() -> new CustomerNotFoundException(customerId));
     }
 
-    public Customer createCustomer(CreateCustomerRequestDTO createCustomerRequestDTO) {
-        List<TennisMatchLicense> tennisMatchLicenses = createCustomerRequestDTO.getTennisMatchLicenseIds().stream()
+    public Customer createCustomer(CustomerRequestDTO customerRequestDTO) {
+        List<TennisMatchLicense> tennisMatchLicenses = customerRequestDTO.getTennisMatchLicenseIds().stream()
                 .map(tennisMatchLicenseService::getTennisMatchLicense)
                 .collect(Collectors.toList());
-        List<TennisTournamentLicense> tennisTournamentLicenses = createCustomerRequestDTO.getTennisMatchLicenseIds().stream()
+        List<TennisTournamentLicense> tennisTournamentLicenses = customerRequestDTO.getTennisMatchLicenseIds().stream()
                 .map(tennisTournamentLicenseService::getTennisTournamentLicense)
                 .collect(Collectors.toList());
         Customer newCustomer = Customer.builder()
-                .firstName(createCustomerRequestDTO.getFirstName())
-                .lastName(createCustomerRequestDTO.getLastName())
-                .dateOfBirth(LocalDate.parse(createCustomerRequestDTO.getDateOfBirth()))
+                .firstName(customerRequestDTO.getFirstName())
+                .lastName(customerRequestDTO.getLastName())
+                .dateOfBirth(LocalDate.parse(customerRequestDTO.getDateOfBirth()))
                 .tennisMatchLicenses(tennisMatchLicenses)
                 .tennisTournamentLicenses(tennisTournamentLicenses)
                 .build();
         return customerRepository.save(newCustomer);
     }
 
-    public Customer updateCustomer(Long customerId, CreateCustomerRequestDTO createCustomerRequestDTO) {
+    public Customer updateCustomer(Long customerId, CustomerRequestDTO customerRequestDTO) {
         Customer currentCustomer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(customerId));
-        List<TennisMatchLicense> tennisMatchLicenses = createCustomerRequestDTO.getTennisMatchLicenseIds().stream()
+        List<TennisMatchLicense> tennisMatchLicenses = customerRequestDTO.getTennisMatchLicenseIds().stream()
                 .map(tennisMatchLicenseService::getTennisMatchLicense)
                 .collect(Collectors.toList());
-        List<TennisTournamentLicense> tennisTournamentLicenses = createCustomerRequestDTO.getTennisTournamentLicenseIds().stream()
+        List<TennisTournamentLicense> tennisTournamentLicenses = customerRequestDTO.getTennisTournamentLicenseIds().stream()
                 .map(tennisTournamentLicenseService::getTennisTournamentLicense)
                 .collect(Collectors.toList());
-        currentCustomer.setFirstName(createCustomerRequestDTO.getFirstName());
-        currentCustomer.setLastName(createCustomerRequestDTO.getLastName());
-        currentCustomer.setDateOfBirth(LocalDate.parse(createCustomerRequestDTO.getDateOfBirth()));
+        currentCustomer.setFirstName(customerRequestDTO.getFirstName());
+        currentCustomer.setLastName(customerRequestDTO.getLastName());
+        currentCustomer.setDateOfBirth(LocalDate.parse(customerRequestDTO.getDateOfBirth()));
         currentCustomer.setTennisMatchLicenses(tennisMatchLicenses);
         currentCustomer.setTennisTournamentLicenses(tennisTournamentLicenses);
         return customerRepository.save(currentCustomer);
