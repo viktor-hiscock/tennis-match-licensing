@@ -1,6 +1,7 @@
 package com.imgarena.licensing.tennis.service;
 
 import com.imgarena.licensing.tennis.dto.CreateTennisTournamentRequestDTO;
+import com.imgarena.licensing.tennis.exception.TennisTournamentNotFoundException;
 import com.imgarena.licensing.tennis.model.TennisMatch;
 import com.imgarena.licensing.tennis.model.TennisTournament;
 import com.imgarena.licensing.tennis.repository.TennisTournamentRepository;
@@ -15,6 +16,11 @@ import java.util.stream.Collectors;
 public class TennisTournamentService {
     private final TennisMatchService tennisMatchService;
     private final TennisTournamentRepository tennisTournamentRepository;
+
+    public TennisTournament getTennisTournament(Long tennisTournamentId) {
+        return tennisTournamentRepository.findById(tennisTournamentId)
+                .orElseThrow(() -> new TennisTournamentNotFoundException(tennisTournamentId));
+    }
 
     public TennisTournament createTennisTournament(CreateTennisTournamentRequestDTO createTennisTournamentRequestDTO) {
         List<TennisMatch> tennisMatches = createTennisTournamentRequestDTO.getTennisMatchIds().stream()
