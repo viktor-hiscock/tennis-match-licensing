@@ -40,8 +40,8 @@ CREATE TABLE tennis_match (
 
 CREATE TABLE tennis_match_license (
     id INT NOT NULL AUTO_INCREMENT,
-    customer_id INT NOT NULL,
-    tennis_match_id INT NOT NULL,
+    customer_id INT,
+    tennis_match_id INT,
     PRIMARY KEY (id),
     FOREIGN KEY (customer_id) REFERENCES CUSTOMER(id),
     FOREIGN KEY (tennis_match_id) REFERENCES TENNIS_MATCH(id)
