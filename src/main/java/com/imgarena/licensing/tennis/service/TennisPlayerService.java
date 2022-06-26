@@ -5,19 +5,15 @@ import com.imgarena.licensing.tennis.exception.TennisPlayerNotFoundException;
 import com.imgarena.licensing.tennis.model.TennisPlayer;
 import com.imgarena.licensing.tennis.repository.TennisPlayerRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class TennisPlayerService {
     private final TennisPlayerRepository tennisPlayerRepository;
+    private final PaginationService<TennisPlayer> paginationService;
 
     public TennisPlayer getTennisPlayer(Long tennisPlayerId) {
         return tennisPlayerRepository.findById(tennisPlayerId)
@@ -41,14 +37,13 @@ public class TennisPlayerService {
         return currentTennisPlayer;
     }
 
-    public List<TennisPlayer> getAllTennisPlayers(int pageNumber, int pageSize, String sortBy) {
-        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
-        Page<TennisPlayer> pagedResult = tennisPlayerRepository.findAll(paging);
+    public TennisPlayer deleteTennisPlayer(Long tennisPlayerId) {
+        TennisPlayer tennisPlayerToDelete = getTennisPlayer(tennisPlayerId);
+        tennisPlayerRepository.delete(tennisPlayerToDelete);
+        return tennisPlayerToDelete;
+    }
 
-        if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
-        } else {
-            return new ArrayList<>();
-        }
+    public List<TennisPlayer> getAllTennisPlayers(int pageNumber, int pageSize) {
+        return paginationService.getPaginatedRecords(pageNumber, pageSize, tennisPlayerRepository);
     }
 }

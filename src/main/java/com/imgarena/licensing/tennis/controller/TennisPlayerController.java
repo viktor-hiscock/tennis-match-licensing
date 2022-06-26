@@ -53,11 +53,10 @@ public class TennisPlayerController {
     @GetMapping("v1/tennis/player")
     public ResponseEntity<List<TennisPlayerResponseDTO>> getAllTennisPlayers(
             @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "id") String sortBy
+            @RequestParam(defaultValue = "10") int pageSize
     ) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(tennisPlayerService.getAllTennisPlayers(pageNumber, pageSize, sortBy).stream()
+                .body(tennisPlayerService.getAllTennisPlayers(pageNumber, pageSize).stream()
                                 .map(TennisPlayerMapper::convertToTennisPlayerResponseDTO)
                                 .collect(Collectors.toList()));
     }
