@@ -1,9 +1,11 @@
 spring:
   datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/licensed_tennis_matches
-    username: local_dev
-    password: imgarena
+    url: jdbc:h2:mem:mydb
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
   flyway:
     user: local_dev
     password: imgarena
