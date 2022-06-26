@@ -1,6 +1,6 @@
 package com.imgarena.licensing.tennis.controller;
 
-import com.imgarena.licensing.tennis.dto.CreateTennisMatchRequestDTO;
+import com.imgarena.licensing.tennis.dto.TennisMatchRequestDTO;
 import com.imgarena.licensing.tennis.dto.TennisMatchResponseDTO;
 import com.imgarena.licensing.tennis.mapper.TennisMatchMapper;
 import com.imgarena.licensing.tennis.model.TennisMatch;
@@ -33,8 +33,8 @@ public class TennisMatchController {
     }
 
     @PostMapping("v1/tennis/match")
-    public ResponseEntity<TennisMatchResponseDTO> createTennisMatch(@RequestBody @Valid CreateTennisMatchRequestDTO createTennisMatchRequestDTO) {
-        TennisMatch createdTennisMatch = tennisMatchService.createTennisMatch(createTennisMatchRequestDTO);
+    public ResponseEntity<TennisMatchResponseDTO> createTennisMatch(@RequestBody @Valid TennisMatchRequestDTO tennisMatchRequestDTO) {
+        TennisMatch createdTennisMatch = tennisMatchService.createTennisMatch(tennisMatchRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(TennisMatchMapper.convertToTennisMatchResponseDTO(createdTennisMatch));
     }
@@ -42,9 +42,9 @@ public class TennisMatchController {
     @PutMapping("v1/tennis/match/{matchId}")
     public ResponseEntity<TennisMatchResponseDTO> updateTennisMatch(
             @PathVariable("matchId") Long matchId,
-            @RequestBody @Valid CreateTennisMatchRequestDTO createTennisMatchRequestDTO
+            @RequestBody @Valid TennisMatchRequestDTO tennisMatchRequestDTO
     ) {
-        TennisMatch updatedTennisMatch = tennisMatchService.updateTennisMatch(matchId, createTennisMatchRequestDTO);
+        TennisMatch updatedTennisMatch = tennisMatchService.updateTennisMatch(matchId, tennisMatchRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(TennisMatchMapper.convertToTennisMatchResponseDTO(updatedTennisMatch));
     }

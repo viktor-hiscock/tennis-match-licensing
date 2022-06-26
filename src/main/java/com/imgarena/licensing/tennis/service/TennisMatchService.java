@@ -1,6 +1,6 @@
 package com.imgarena.licensing.tennis.service;
 
-import com.imgarena.licensing.tennis.dto.CreateTennisMatchRequestDTO;
+import com.imgarena.licensing.tennis.dto.TennisMatchRequestDTO;
 import com.imgarena.licensing.tennis.exception.TennisMatchNotFoundException;
 import com.imgarena.licensing.tennis.model.TennisMatch;
 import com.imgarena.licensing.tennis.model.TennisPlayer;
@@ -30,14 +30,14 @@ public class TennisMatchService {
                 .orElseThrow(() -> new TennisMatchNotFoundException(matchId));
     }
 
-    public TennisMatch createTennisMatch(CreateTennisMatchRequestDTO createTennisMatchRequestDTO) {
-        TennisPlayer tennisPlayerA = tennisPlayerService.getTennisPlayer(createTennisMatchRequestDTO.getTennisPlayerAId());
-        TennisPlayer tennisPlayerB = tennisPlayerService.getTennisPlayer(createTennisMatchRequestDTO.getTennisPlayerBId());
+    public TennisMatch createTennisMatch(TennisMatchRequestDTO tennisMatchRequestDTO) {
+        TennisPlayer tennisPlayerA = tennisPlayerService.getTennisPlayer(tennisMatchRequestDTO.getTennisPlayerAId());
+        TennisPlayer tennisPlayerB = tennisPlayerService.getTennisPlayer(tennisMatchRequestDTO.getTennisPlayerBId());
         TennisMatch newTennisMatch = TennisMatch.builder()
                 .playerA(tennisPlayerA)
                 .playerB(tennisPlayerB)
-                .startDate(LocalDateTime.parse(createTennisMatchRequestDTO.getStartDate().getTimestamp()))
-                .zoneId(Optional.ofNullable(createTennisMatchRequestDTO.getStartDate().getZoneId())
+                .startDate(LocalDateTime.parse(tennisMatchRequestDTO.getStartDate().getTimestamp()))
+                .zoneId(Optional.ofNullable(tennisMatchRequestDTO.getStartDate().getZoneId())
                         .map(ZoneId::of)
                         .orElse(ZoneId.of("UTC")))
                 .build();
@@ -45,13 +45,13 @@ public class TennisMatchService {
     }
 
     @Transactional
-    public TennisMatch updateTennisMatch(Long matchId, CreateTennisMatchRequestDTO createTennisMatchRequestDTO) {
+    public TennisMatch updateTennisMatch(Long matchId, TennisMatchRequestDTO tennisMatchRequestDTO) {
         TennisMatch managedTennisMatch = tennisMatchRepository.findById(matchId)
                 .orElseThrow(() -> new TennisMatchNotFoundException(matchId));
-        managedTennisMatch.setPlayerA(tennisPlayerService.getTennisPlayer(createTennisMatchRequestDTO.getTennisPlayerAId()));
-        managedTennisMatch.setPlayerB(tennisPlayerService.getTennisPlayer(createTennisMatchRequestDTO.getTennisPlayerBId()));
-        managedTennisMatch.setStartDate(LocalDateTime.parse(createTennisMatchRequestDTO.getStartDate().getTimestamp()));
-        managedTennisMatch.setZoneId(Optional.ofNullable(createTennisMatchRequestDTO.getStartDate().getZoneId())
+        managedTennisMatch.setPlayerA(tennisPlayerService.getTennisPlayer(tennisMatchRequestDTO.getTennisPlayerAId()));
+        managedTennisMatch.setPlayerB(tennisPlayerService.getTennisPlayer(tennisMatchRequestDTO.getTennisPlayerBId()));
+        managedTennisMatch.setStartDate(LocalDateTime.parse(tennisMatchRequestDTO.getStartDate().getTimestamp()));
+        managedTennisMatch.setZoneId(Optional.ofNullable(tennisMatchRequestDTO.getStartDate().getZoneId())
                 .map(ZoneId::of)
                 .orElse(ZoneId.of("UTC")));
         return managedTennisMatch;

@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
-public class CreateTennisMatchRequestDTO {
+public class TennisMatchRequestDTO {
     @Valid
     @NotNull
     private StartDateDTO startDate;
