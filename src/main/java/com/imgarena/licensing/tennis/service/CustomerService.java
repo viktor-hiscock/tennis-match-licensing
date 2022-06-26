@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,12 +33,18 @@ public class CustomerService {
     }
 
     public Customer createCustomer(CustomerRequestDTO customerRequestDTO) {
-        List<TennisMatchLicense> tennisMatchLicenses = customerRequestDTO.getTennisMatchLicenseIds().stream()
-                .map(tennisMatchLicenseService::getTennisMatchLicense)
-                .collect(Collectors.toList());
-        List<TennisTournamentLicense> tennisTournamentLicenses = customerRequestDTO.getTennisMatchLicenseIds().stream()
-                .map(tennisTournamentLicenseService::getTennisTournamentLicense)
-                .collect(Collectors.toList());
+        List<TennisMatchLicense> tennisMatchLicenses = Optional.ofNullable(customerRequestDTO.getTennisMatchLicenseIds())
+                .map(tennisMatchLicenseIds -> tennisMatchLicenseIds.stream()
+                        .map(tennisMatchLicenseService::getTennisMatchLicense)
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
+
+        List<TennisTournamentLicense> tennisTournamentLicenses = Optional.ofNullable(customerRequestDTO.getTennisTournamentLicenseIds())
+                .map(tennisTournamentLicenseIds -> tennisTournamentLicenseIds.stream()
+                        .map(tennisTournamentLicenseService::getTennisTournamentLicense)
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
+
         Customer newCustomer = Customer.builder()
                 .firstName(customerRequestDTO.getFirstName())
                 .lastName(customerRequestDTO.getLastName())
