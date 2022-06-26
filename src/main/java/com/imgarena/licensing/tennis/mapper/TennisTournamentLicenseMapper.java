@@ -7,7 +7,6 @@ public class TennisTournamentLicenseMapper {
     public static TennisTournamentLicenseResponseDTO convertToTennisTournamentLicenseResponseDTO(TennisTournamentLicense tennisTournamentLicense) {
         return TennisTournamentLicenseResponseDTO.builder()
                 .tennisTournamentLicenseId(tennisTournamentLicense.getId())
-                .customer(CustomerMapper.convertToCustomerResponseDTO(tennisTournamentLicense.getCustomer()))
                 .tennisTournament(TennisTournamentMapper.convertToTennisTournamentResponseDTO(tennisTournamentLicense.getTennisTournament()))
                 .build();
     }

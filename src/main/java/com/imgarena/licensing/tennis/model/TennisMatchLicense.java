@@ -25,10 +25,6 @@ public class TennisMatchLicense {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "ID")
-    private Customer customer;
-
-    @OneToOne
     @JoinColumn(name = "TENNIS_MATCH_ID", referencedColumnName = "ID")
     private TennisMatch tennisMatch;
 }

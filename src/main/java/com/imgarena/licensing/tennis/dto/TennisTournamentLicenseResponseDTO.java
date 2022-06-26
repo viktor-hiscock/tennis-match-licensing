@@ -7,6 +7,5 @@ import lombok.Data;
 @Builder
 public class TennisTournamentLicenseResponseDTO {
     private Long tennisTournamentLicenseId;
-    private CustomerResponseDTO customer;
     private TennisTournamentResponseDTO tennisTournament;
 }

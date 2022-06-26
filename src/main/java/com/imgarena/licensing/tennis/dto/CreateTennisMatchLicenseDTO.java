@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @Builder
 public class CreateTennisMatchLicenseDTO {
-    private Long customerId;
     private Long tennisMatchId;
+    private String placeHolder;
 }

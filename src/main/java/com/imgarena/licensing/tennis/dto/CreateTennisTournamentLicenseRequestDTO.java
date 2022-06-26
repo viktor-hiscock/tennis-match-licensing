@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @Builder
 public class CreateTennisTournamentLicenseRequestDTO {
-    private Long customerId;
     private Long tennisTournamentId;
+    private String placeholder;
 }

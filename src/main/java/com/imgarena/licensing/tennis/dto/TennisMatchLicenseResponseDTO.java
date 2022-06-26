@@ -7,6 +7,5 @@ import lombok.Data;
 @Builder
 public class TennisMatchLicenseResponseDTO {
     private Long tennisMatchLicenseId;
-    private CustomerResponseDTO customer;
     private TennisMatchResponseDTO tennisMatch;
 }

@@ -8,6 +8,5 @@ import java.util.List;
 @Data
 @Builder
 public class CreateTennisTournamentRequestDTO {
-    private Long tennisTournamentId;
     List<Long> tennisMatchIds;
 }
