@@ -1,18 +1,9 @@
-DROP TABLE IF EXISTS customer;
 DROP TABLE IF EXISTS tennis_tournament_license;
 DROP TABLE IF EXISTS tennis_match_license;
 DROP TABLE IF EXISTS tennis_match;
 DROP TABLE IF EXISTS tennis_tournament;
 DROP TABLE IF EXISTS tennis_player;
-
-CREATE TABLE customer (
-    id INT NOT NULL AUTO_INCREMENT,
-    first_name VARCHAR(100) NOT NULL,
-    last_name VARCHAR(100) NOT NULL,
-    date_of_birth DATETIME NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW(),
-    PRIMARY KEY (id)
-);
+DROP TABLE IF EXISTS customer;
 
 CREATE TABLE tennis_player (
     id INT NOT NULL AUTO_INCREMENT,
@@ -51,4 +42,21 @@ CREATE TABLE tennis_tournament_license (
     tennis_tournament_license_id INT,
     PRIMARY KEY (id),
     FOREIGN KEY (tennis_tournament_license_id) REFERENCES TENNIS_TOURNAMENT(id)
-)
+);
+
+CREATE TABLE customer (
+    id INT NOT NULL AUTO_INCREMENT,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    date_of_birth DATETIME NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE customer_tennis_match_license (
+    customer_id INT NOT NULL,
+    tennis_match_license_id INT NOT NULL,
+    PRIMARY KEY (customer_id, tennis_match_license_id),
+    FOREIGN KEY (customer_id) REFERENCES CUSTOMER(id),
+    FOREIGN KEY (tennis_match_license_id) REFERENCES TENNIS_MATCH_LICENSE(id)
+);

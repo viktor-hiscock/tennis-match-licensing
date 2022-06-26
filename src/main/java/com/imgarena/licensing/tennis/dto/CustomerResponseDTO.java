@@ -3,6 +3,8 @@ package com.imgarena.licensing.tennis.dto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
 public class CustomerResponseDTO {
@@ -11,4 +13,5 @@ public class CustomerResponseDTO {
     private String lastName;
     private String dateOfBirth;
     private String createdAt;
+    private List<TennisMatchLicenseResponseDTO> tennisMatchLicenses;
 }

@@ -4,6 +4,7 @@ import com.imgarena.licensing.tennis.dto.CustomerResponseDTO;
 import com.imgarena.licensing.tennis.model.Customer;
 
 import java.time.format.DateTimeFormatter;
+import java.util.stream.Collectors;
 
 public class CustomerMapper {
     public static CustomerResponseDTO convertToCustomerResponseDTO(Customer customer) {
@@ -13,6 +14,9 @@ public class CustomerMapper {
                 .lastName(customer.getLastName())
                 .dateOfBirth(customer.getDateOfBirth().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .createdAt(customer.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:ss")))
+                .tennisMatchLicenses(customer.getTennisMatchLicenses().stream()
+                        .map(TennisMatchLicenseMapper::convertToTennisMatchLicenseResponseDTO)
+                        .collect(Collectors.toList()))
                 .build();
     }
 }
