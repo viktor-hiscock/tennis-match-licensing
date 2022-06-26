@@ -1,6 +1,7 @@
 package com.imgarena.licensing.tennis.service;
 
 import com.imgarena.licensing.tennis.dto.CreateTennisMatchLicenseDTO;
+import com.imgarena.licensing.tennis.exception.TennisMatchLicenseNotFoundException;
 import com.imgarena.licensing.tennis.model.Customer;
 import com.imgarena.licensing.tennis.model.TennisMatch;
 import com.imgarena.licensing.tennis.model.TennisMatchLicense;
@@ -14,6 +15,11 @@ public class TennisMatchLicenseService {
     private final CustomerService customerService;
     private final TennisMatchService tennisMatchService;
     private final TennisMatchLicenseRepository tennisMatchLicenseRepository;
+
+    public TennisMatchLicense getTennisMatchLicense(Long tennisMatchLicenseId) {
+        return tennisMatchLicenseRepository.findById(tennisMatchLicenseId)
+                .orElseThrow(() -> new TennisMatchLicenseNotFoundException(tennisMatchLicenseId));
+    }
 
     public TennisMatchLicense createTennisMatchLicense(CreateTennisMatchLicenseDTO createTennisMatchLicenseDTO) {
         Customer customer = customerService.getCustomer(createTennisMatchLicenseDTO.getCustomerId());
