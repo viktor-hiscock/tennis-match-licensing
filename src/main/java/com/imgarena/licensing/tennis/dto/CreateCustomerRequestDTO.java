@@ -12,4 +12,5 @@ public class CreateCustomerRequestDTO {
     private String lastName;
     private String dateOfBirth;
     private List<Long> tennisMatchLicenseIds;
+    private List<Long> tennisTournamentLicenseIds;
 }

@@ -17,6 +17,9 @@ public class CustomerMapper {
                 .tennisMatchLicenses(customer.getTennisMatchLicenses().stream()
                         .map(TennisMatchLicenseMapper::convertToTennisMatchLicenseResponseDTO)
                         .collect(Collectors.toList()))
+                .tennisTournamentLicenses(customer.getTennisTournamentLicenses().stream()
+                        .map(TennisTournamentLicenseMapper::convertToTennisTournamentLicenseResponseDTO)
+                        .collect(Collectors.toList()))
                 .build();
     }
 }

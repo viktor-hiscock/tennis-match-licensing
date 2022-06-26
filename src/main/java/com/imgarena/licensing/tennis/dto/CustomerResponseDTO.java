@@ -14,4 +14,5 @@ public class CustomerResponseDTO {
     private String dateOfBirth;
     private String createdAt;
     private List<TennisMatchLicenseResponseDTO> tennisMatchLicenses;
+    private List<TennisTournamentLicenseResponseDTO> tennisTournamentLicenses;
 }

@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS customer_tennis_match_license;
+DROP TABLE IF EXISTS customer_tennis_tournament_license;
 DROP TABLE IF EXISTS tennis_tournament_license;
 DROP TABLE IF EXISTS tennis_match_license;
 DROP TABLE IF EXISTS tennis_match;
@@ -59,4 +61,12 @@ CREATE TABLE customer_tennis_match_license (
     PRIMARY KEY (customer_id, tennis_match_license_id),
     FOREIGN KEY (customer_id) REFERENCES CUSTOMER(id),
     FOREIGN KEY (tennis_match_license_id) REFERENCES TENNIS_MATCH_LICENSE(id)
+);
+
+CREATE TABLE customer_tennis_tournament_license (
+    customer_id INT NOT NULL,
+    tennis_tournament_license_id INT NOT NULL,
+    PRIMARY KEY (customer_id, tennis_tournament_license_id),
+    FOREIGN KEY (customer_id) REFERENCES CUSTOMER(id),
+    FOREIGN KEY (tennis_tournament_license_id) REFERENCES TENNIS_TOURNAMENT_LICENSE(id)
 );

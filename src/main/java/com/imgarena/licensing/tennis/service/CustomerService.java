@@ -5,6 +5,7 @@ import com.imgarena.licensing.tennis.dto.UpdateCustomerRequestDTO;
 import com.imgarena.licensing.tennis.exception.CustomerNotFoundException;
 import com.imgarena.licensing.tennis.model.Customer;
 import com.imgarena.licensing.tennis.model.TennisMatchLicense;
+import com.imgarena.licensing.tennis.model.TennisTournamentLicense;
 import com.imgarena.licensing.tennis.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class CustomerService {
     private final TennisMatchLicenseService tennisMatchLicenseService;
+    private final TennisTournamentLicenseService tennisTournamentLicense;
     private final CustomerRepository customerRepository;
 
     public Customer getCustomer(Long customerId) {
@@ -34,11 +36,15 @@ public class CustomerService {
         List<TennisMatchLicense> tennisMatchLicenses = createCustomerRequestDTO.getTennisMatchLicenseIds().stream()
                 .map(tennisMatchLicenseService::getTennisMatchLicense)
                 .collect(Collectors.toList());
+        List<TennisTournamentLicense> tennisTournamentLicenses = createCustomerRequestDTO.getTennisMatchLicenseIds().stream()
+                .map(tennisTournamentLicense::getTennisTournamentLicense)
+                .collect(Collectors.toList());
         Customer newCustomer = Customer.builder()
                 .firstName(createCustomerRequestDTO.getFirstName())
                 .lastName(createCustomerRequestDTO.getLastName())
                 .dateOfBirth(LocalDate.parse(createCustomerRequestDTO.getDateOfBirth()))
                 .tennisMatchLicenses(tennisMatchLicenses)
+                .tennisTournamentLicenses(tennisTournamentLicenses)
                 .build();
         return customerRepository.save(newCustomer);
     }

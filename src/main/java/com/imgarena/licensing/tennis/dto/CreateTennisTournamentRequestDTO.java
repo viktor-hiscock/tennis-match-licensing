@@ -8,5 +8,6 @@ import java.util.List;
 @Data
 @Builder
 public class CreateTennisTournamentRequestDTO {
-    List<Long> tennisMatchIds;
+    private List<Long> tennisMatchIds;
+    private String placeholder;
 }

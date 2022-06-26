@@ -8,4 +8,5 @@ public class TableNames {
     public static final String TENNIS_TOURNAMENT = "TENNIS_TOURNAMENT";
     public static final String TENNIS_TOURNAMENT_LICENSE = "TENNIS_TOURNAMENT_LICENSE";
     public static final String CUSTOMER_TENNIS_MATCH_LICENSE = "CUSTOMER_TENNIS_MATCH_LICENSE";
+    public static final String CUSTOMER_TENNIS_TOURNAMENT_LICENSE = "CUSTOMER_TENNIS_TOURNAMENT_LICENSE";
 }

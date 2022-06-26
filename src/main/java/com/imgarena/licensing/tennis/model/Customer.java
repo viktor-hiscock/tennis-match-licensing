@@ -43,6 +43,14 @@ public class Customer {
     )
     private List<TennisMatchLicense> tennisMatchLicenses;
 
+    @ManyToMany
+    @JoinTable(
+            name = TableNames.CUSTOMER_TENNIS_TOURNAMENT_LICENSE,
+            joinColumns = @JoinColumn(name = "CUSTOMER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "TENNIS_TOURNAMENT_LICENSE_ID")
+    )
+    private List<TennisTournamentLicense> tennisTournamentLicenses;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 }
