@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class CustomerService {
     private final TennisMatchLicenseService tennisMatchLicenseService;
-    private final TennisTournamentLicenseService tennisTournamentLicense;
+    private final TennisTournamentLicenseService tennisTournamentLicenseService;
     private final CustomerRepository customerRepository;
 
     public Customer getCustomer(Long customerId) {
@@ -37,7 +37,7 @@ public class CustomerService {
                 .map(tennisMatchLicenseService::getTennisMatchLicense)
                 .collect(Collectors.toList());
         List<TennisTournamentLicense> tennisTournamentLicenses = createCustomerRequestDTO.getTennisMatchLicenseIds().stream()
-                .map(tennisTournamentLicense::getTennisTournamentLicense)
+                .map(tennisTournamentLicenseService::getTennisTournamentLicense)
                 .collect(Collectors.toList());
         Customer newCustomer = Customer.builder()
                 .firstName(createCustomerRequestDTO.getFirstName())
@@ -52,9 +52,17 @@ public class CustomerService {
     public Customer updateCustomer(Long customerId, UpdateCustomerRequestDTO updateCustomerRequestDTO) {
         Customer currentCustomer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(customerId));
+        List<TennisMatchLicense> tennisMatchLicenses = updateCustomerRequestDTO.getTennisMatchLicenseIds().stream()
+                .map(tennisMatchLicenseService::getTennisMatchLicense)
+                .collect(Collectors.toList());
+        List<TennisTournamentLicense> tennisTournamentLicenses = updateCustomerRequestDTO.getTennisTournamentLicenseIds().stream()
+                .map(tennisTournamentLicenseService::getTennisTournamentLicense)
+                .collect(Collectors.toList());
         currentCustomer.setFirstName(updateCustomerRequestDTO.getFirstName());
         currentCustomer.setLastName(updateCustomerRequestDTO.getLastName());
         currentCustomer.setDateOfBirth(LocalDate.parse(updateCustomerRequestDTO.getDateOfBirth()));
+        currentCustomer.setTennisMatchLicenses(tennisMatchLicenses);
+        currentCustomer.setTennisTournamentLicenses(tennisTournamentLicenses);
         return customerRepository.save(currentCustomer);
     }
 
