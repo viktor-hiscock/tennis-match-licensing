@@ -1,9 +1,7 @@
 package com.imgarena.licensing.tennis.exception;
 
-import com.imgarena.licensing.tennis.identifiers.MatchId;
-
 public class TennisMatchNotFoundException extends RuntimeException {
-    public TennisMatchNotFoundException(MatchId matchId) {
-        super(String.format("Tennis match %s does not exist", matchId.identifier()));
+    public TennisMatchNotFoundException(Long matchId) {
+        super(String.format("Tennis match %s does not exist", matchId));
     }
 }

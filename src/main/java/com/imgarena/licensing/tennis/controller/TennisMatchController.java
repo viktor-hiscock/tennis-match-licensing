@@ -3,7 +3,6 @@ package com.imgarena.licensing.tennis.controller;
 import com.imgarena.licensing.tennis.dto.CreateTennisMatchRequestDTO;
 import com.imgarena.licensing.tennis.dto.TennisMatchResponseDTO;
 import com.imgarena.licensing.tennis.dto.UpdateTennisMatchRequestDTO;
-import com.imgarena.licensing.tennis.identifiers.MatchId;
 import com.imgarena.licensing.tennis.mapper.TennisMatchMapper;
 import com.imgarena.licensing.tennis.model.TennisMatch;
 import com.imgarena.licensing.tennis.service.TennisMatchService;
@@ -29,9 +28,9 @@ public class TennisMatchController {
     private final TennisMatchService tennisMatchService;
 
     @GetMapping("v1/tennis/match/{matchId}")
-    public ResponseEntity<TennisMatchResponseDTO> getTennisMatch(@PathVariable("matchId") String matchId) {
+    public ResponseEntity<TennisMatchResponseDTO> getTennisMatch(@PathVariable("matchId") Long matchId) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(TennisMatchMapper.convertToTennisMatchResponseDTO(tennisMatchService.getTennisMatch(new MatchId(matchId))));
+                .body(TennisMatchMapper.convertToTennisMatchResponseDTO(tennisMatchService.getTennisMatch(matchId)));
     }
 
     @PostMapping("v1/tennis/match")
@@ -43,17 +42,17 @@ public class TennisMatchController {
 
     @PutMapping("v1/tennis/match/{matchId}")
     public ResponseEntity<TennisMatchResponseDTO> updateTennisMatch(
-            @PathVariable("matchId") String matchId,
+            @PathVariable("matchId") Long matchId,
             @RequestBody @Valid UpdateTennisMatchRequestDTO updateTennisMatchRequestDTO
     ) {
-        TennisMatch updatedTennisMatch = tennisMatchService.updateTennisMatch(new MatchId(matchId), updateTennisMatchRequestDTO);
+        TennisMatch updatedTennisMatch = tennisMatchService.updateTennisMatch(matchId, updateTennisMatchRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(TennisMatchMapper.convertToTennisMatchResponseDTO(updatedTennisMatch));
     }
 
     @DeleteMapping("v1/tennis/match/{matchId}")
-    public ResponseEntity<TennisMatchResponseDTO> deleteTennisMatch(@PathVariable("matchId") String matchId) {
-        TennisMatch deletedTennisMatch = tennisMatchService.deleteTennisMatch(new MatchId(matchId));
+    public ResponseEntity<TennisMatchResponseDTO> deleteTennisMatch(@PathVariable("matchId") Long matchId) {
+        TennisMatch deletedTennisMatch = tennisMatchService.deleteTennisMatch(matchId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(TennisMatchMapper.convertToTennisMatchResponseDTO(deletedTennisMatch));
     }

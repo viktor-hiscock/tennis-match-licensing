@@ -21,7 +21,6 @@ CREATE TABLE tennis_player (
 
 CREATE TABLE tennis_match (
     id INT NOT NULL AUTO_INCREMENT,
-    match_id VARCHAR(100) UNIQUE NOT NULL,
     start_date DATETIME NOT NULL,
     zone_id VARCHAR(100) NOT NULL,
     tennis_player_a_id INT NOT NULL,

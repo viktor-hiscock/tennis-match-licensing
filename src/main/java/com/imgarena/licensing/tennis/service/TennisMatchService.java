@@ -3,7 +3,6 @@ package com.imgarena.licensing.tennis.service;
 import com.imgarena.licensing.tennis.dto.CreateTennisMatchRequestDTO;
 import com.imgarena.licensing.tennis.dto.UpdateTennisMatchRequestDTO;
 import com.imgarena.licensing.tennis.exception.TennisMatchNotFoundException;
-import com.imgarena.licensing.tennis.identifiers.MatchId;
 import com.imgarena.licensing.tennis.model.TennisMatch;
 import com.imgarena.licensing.tennis.model.TennisPlayer;
 import com.imgarena.licensing.tennis.repository.TennisMatchRepository;
@@ -27,8 +26,8 @@ public class TennisMatchService {
     private final TennisPlayerService tennisPlayerService;
     private final TennisMatchRepository tennisMatchRepository;
 
-    public TennisMatch getTennisMatch(MatchId matchId) {
-        return tennisMatchRepository.findByMatchId(matchId)
+    public TennisMatch getTennisMatch(Long matchId) {
+        return tennisMatchRepository.findById(matchId)
                 .orElseThrow(() -> new TennisMatchNotFoundException(matchId));
     }
 
@@ -36,7 +35,6 @@ public class TennisMatchService {
         TennisPlayer tennisPlayerA = tennisPlayerService.getTennisPlayer(createTennisMatchRequestDTO.getTennisPlayerAId());
         TennisPlayer tennisPlayerB = tennisPlayerService.getTennisPlayer(createTennisMatchRequestDTO.getTennisPlayerAId());
         TennisMatch newTennisMatch = TennisMatch.builder()
-                .matchId(new MatchId(createTennisMatchRequestDTO.getMatchId()))
                 .playerA(tennisPlayerA)
                 .playerB(tennisPlayerB)
                 .startDate(LocalDateTime.parse(createTennisMatchRequestDTO.getStartDate().getTimestamp()))
@@ -48,8 +46,8 @@ public class TennisMatchService {
     }
 
     @Transactional
-    public TennisMatch updateTennisMatch(MatchId matchId, UpdateTennisMatchRequestDTO updateTennisMatchRequestDTO) {
-        TennisMatch managedTennisMatch = tennisMatchRepository.findByMatchId(matchId)
+    public TennisMatch updateTennisMatch(Long matchId, UpdateTennisMatchRequestDTO updateTennisMatchRequestDTO) {
+        TennisMatch managedTennisMatch = tennisMatchRepository.findById(matchId)
                 .orElseThrow(() -> new TennisMatchNotFoundException(matchId));
         managedTennisMatch.setPlayerA(tennisPlayerService.getTennisPlayer(updateTennisMatchRequestDTO.getTennisPlayerAId()));
         managedTennisMatch.setPlayerB(tennisPlayerService.getTennisPlayer(updateTennisMatchRequestDTO.getTennisPlayerBId()));
@@ -60,8 +58,8 @@ public class TennisMatchService {
         return managedTennisMatch;
     }
 
-    public TennisMatch deleteTennisMatch(MatchId matchId) {
-        Optional<TennisMatch> tennisMatchToDelete = tennisMatchRepository.findByMatchId(matchId);
+    public TennisMatch deleteTennisMatch(Long matchId) {
+        Optional<TennisMatch> tennisMatchToDelete = tennisMatchRepository.findById(matchId);
         if (tennisMatchToDelete.isPresent()) {
             tennisMatchRepository.delete(tennisMatchToDelete.get());
         } else {

@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 public class TennisMatchMapper {
     public static TennisMatchResponseDTO convertToTennisMatchResponseDTO(TennisMatch tennisMatch) {
         return TennisMatchResponseDTO.builder()
-                .matchId(tennisMatch.getMatchId().identifier())
+                .matchId(tennisMatch.getId())
                 .tennisPlayerA(TennisPlayerMapper.convertToTennisPlayerResponseDTO(tennisMatch.getPlayerA()))
                 .tennisPlayerB(TennisPlayerMapper.convertToTennisPlayerResponseDTO(tennisMatch.getPlayerB()))
                 .startDate(StartDateDTO.builder()

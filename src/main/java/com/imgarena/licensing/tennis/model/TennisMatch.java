@@ -1,7 +1,5 @@
 package com.imgarena.licensing.tennis.model;
 
-import com.imgarena.licensing.tennis.identifiers.MatchId;
-import com.imgarena.licensing.tennis.model.converter.MatchIdConverter;
 import com.imgarena.licensing.tennis.model.converter.ZoneIdConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,9 +30,6 @@ public class TennisMatch {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @Convert(converter = MatchIdConverter.class)
-    private MatchId matchId;
-
     private LocalDateTime startDate;
 
     @Convert(converter = ZoneIdConverter.class)
@@ -51,7 +46,6 @@ public class TennisMatch {
     public TennisMatch merge(TennisMatch tennisMatch) {
         return TennisMatch.builder()
                 .id(id)
-                .matchId(matchId)
                 .playerA(tennisMatch.getPlayerA())
                 .playerB(tennisMatch.getPlayerB())
                 .startDate(tennisMatch.getStartDate())
