@@ -1,6 +1,6 @@
 package com.imgarena.licensing.tennis.service;
 
-import com.imgarena.licensing.tennis.dto.CreateTennisTournamentRequestDTO;
+import com.imgarena.licensing.tennis.dto.TennisTournamentRequestDTO;
 import com.imgarena.licensing.tennis.exception.TennisMatchNotFoundException;
 import com.imgarena.licensing.tennis.exception.TennisTournamentNotFoundException;
 import com.imgarena.licensing.tennis.model.TennisMatch;
@@ -29,8 +29,8 @@ public class TennisTournamentService {
                 .orElseThrow(() -> new TennisTournamentNotFoundException(tennisTournamentId));
     }
 
-    public TennisTournament createTennisTournament(CreateTennisTournamentRequestDTO createTennisTournamentRequestDTO) {
-        List<TennisMatch> tennisMatches = createTennisTournamentRequestDTO.getTennisMatchIds().stream()
+    public TennisTournament createTennisTournament(TennisTournamentRequestDTO tennisTournamentRequestDTO) {
+        List<TennisMatch> tennisMatches = tennisTournamentRequestDTO.getTennisMatchIds().stream()
                 .map(tennisMatchService::getTennisMatch)
                 .collect(Collectors.toList());
         TennisTournament newTennisTournament = TennisTournament.builder()
@@ -39,10 +39,10 @@ public class TennisTournamentService {
         return tennisTournamentRepository.save(newTennisTournament);
     }
 
-    public TennisTournament updateTennisTournament(Long tennisTournamentId, CreateTennisTournamentRequestDTO createTennisTournamentRequestDTO) {
+    public TennisTournament updateTennisTournament(Long tennisTournamentId, TennisTournamentRequestDTO tennisTournamentRequestDTO) {
         TennisTournament currentTennisTournament = tennisTournamentRepository.findById(tennisTournamentId)
                 .orElseThrow(() -> new TennisTournamentNotFoundException(tennisTournamentId));
-        List<TennisMatch> updatedTennisMatches = createTennisTournamentRequestDTO.getTennisMatchIds().stream()
+        List<TennisMatch> updatedTennisMatches = tennisTournamentRequestDTO.getTennisMatchIds().stream()
                 .map(tennisMatchService::getTennisMatch)
                 .collect(Collectors.toList());
         currentTennisTournament.setTennisMatches(updatedTennisMatches);

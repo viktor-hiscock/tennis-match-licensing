@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class CreateTennisTournamentRequestDTO {
+public class TennisTournamentRequestDTO {
     @NotNull
     private List<Long> tennisMatchIds;
 

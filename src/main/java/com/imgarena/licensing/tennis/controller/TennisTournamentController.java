@@ -1,6 +1,6 @@
 package com.imgarena.licensing.tennis.controller;
 
-import com.imgarena.licensing.tennis.dto.CreateTennisTournamentRequestDTO;
+import com.imgarena.licensing.tennis.dto.TennisTournamentRequestDTO;
 import com.imgarena.licensing.tennis.dto.TennisTournamentResponseDTO;
 import com.imgarena.licensing.tennis.mapper.TennisTournamentMapper;
 import com.imgarena.licensing.tennis.model.TennisTournament;
@@ -33,8 +33,8 @@ public class TennisTournamentController {
     }
 
     @PostMapping("v1/tennis/tournament")
-    public ResponseEntity<TennisTournamentResponseDTO> createTennisTournament(@RequestBody CreateTennisTournamentRequestDTO createTennisTournamentRequestDTO) {
-        TennisTournament newTennisTournament = tennisTournamentService.createTennisTournament(createTennisTournamentRequestDTO);
+    public ResponseEntity<TennisTournamentResponseDTO> createTennisTournament(@RequestBody TennisTournamentRequestDTO tennisTournamentRequestDTO) {
+        TennisTournament newTennisTournament = tennisTournamentService.createTennisTournament(tennisTournamentRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(TennisTournamentMapper.convertToTennisTournamentResponseDTO(newTennisTournament));
     }
@@ -42,9 +42,9 @@ public class TennisTournamentController {
     @PutMapping("v1/tennis/tournament/{tennisTournamentId}")
     public ResponseEntity<TennisTournamentResponseDTO> updateTennisPlayer(
             @PathVariable("tennisTournamentId") Long tennisTournamentId,
-            @RequestBody CreateTennisTournamentRequestDTO createTennisTournamentRequestDTO
+            @RequestBody TennisTournamentRequestDTO tennisTournamentRequestDTO
     ) {
-        TennisTournament tennisTournament = tennisTournamentService.updateTennisTournament(tennisTournamentId, createTennisTournamentRequestDTO);
+        TennisTournament tennisTournament = tennisTournamentService.updateTennisTournament(tennisTournamentId, tennisTournamentRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(TennisTournamentMapper.convertToTennisTournamentResponseDTO(tennisTournament));
     }
