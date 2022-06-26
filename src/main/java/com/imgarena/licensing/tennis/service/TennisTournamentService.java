@@ -2,6 +2,7 @@ package com.imgarena.licensing.tennis.service;
 
 import com.imgarena.licensing.tennis.dto.CreateTennisTournamentRequestDTO;
 import com.imgarena.licensing.tennis.dto.UpdateTennisTournamentRequestDTO;
+import com.imgarena.licensing.tennis.exception.TennisMatchNotFoundException;
 import com.imgarena.licensing.tennis.exception.TennisTournamentNotFoundException;
 import com.imgarena.licensing.tennis.model.TennisMatch;
 import com.imgarena.licensing.tennis.model.TennisTournament;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,6 +48,16 @@ public class TennisTournamentService {
                 .collect(Collectors.toList());
         currentTennisTournament.setTennisMatches(updatedTennisMatches);
         return tennisTournamentRepository.save(currentTennisTournament);
+    }
+
+    public TennisTournament deleteTennisTournament(Long tennisTournamentId) {
+        Optional<TennisTournament> tennisTournamentToDelete = tennisTournamentRepository.findById(tennisTournamentId);
+        if (tennisTournamentToDelete.isPresent()) {
+            tennisTournamentRepository.delete(tennisTournamentToDelete.get());
+        } else {
+            throw new TennisMatchNotFoundException(tennisTournamentId);
+        }
+        return tennisTournamentToDelete.get();
     }
 
     public List<TennisTournament> getAllTennisTournaments(int pageNumber, int pageSize, String sortBy) {

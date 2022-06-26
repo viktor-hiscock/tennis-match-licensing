@@ -29,7 +29,7 @@ public class TennisTournament {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "TENNIS_TOURNAMENT_ID")
     List<TennisMatch> tennisMatches;
 }

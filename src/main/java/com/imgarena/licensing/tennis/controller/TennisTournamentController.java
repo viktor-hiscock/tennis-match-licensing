@@ -9,6 +9,7 @@ import com.imgarena.licensing.tennis.service.TennisTournamentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +47,13 @@ public class TennisTournamentController {
     ) {
         TennisTournament tennisTournament = tennisTournamentService.updateTennisTournament(tennisTournamentId, updateTennisTournamentRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
+                .body(TennisTournamentMapper.convertToTennisTournamentResponseDTO(tennisTournament));
+    }
+
+    @DeleteMapping("v1/tennis/tournament/{tennisTournamentId}")
+    public ResponseEntity<TennisTournamentResponseDTO> deleteTennisTournament(@PathVariable("tennisTournamentId") Long tennisTournamentId) {
+        TennisTournament tennisTournament = tennisTournamentService.deleteTennisTournament(tennisTournamentId);
+        return ResponseEntity.status(HttpStatus.OK)
                 .body(TennisTournamentMapper.convertToTennisTournamentResponseDTO(tennisTournament));
     }
 
