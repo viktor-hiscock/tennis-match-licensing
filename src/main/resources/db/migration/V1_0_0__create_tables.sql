@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS tennis_match_license;
 DROP TABLE IF EXISTS tennis_match;
+DROP TABLE IF EXISTS tennis_tournament;
 DROP TABLE IF EXISTS tennis_player;
 DROP TABLE IF EXISTS customer;
 
@@ -19,15 +20,22 @@ CREATE TABLE tennis_player (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE tennis_tournament (
+    id INT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE tennis_match (
     id INT NOT NULL AUTO_INCREMENT,
+    tennis_tournament_id INT,
     start_date DATETIME NOT NULL,
     zone_id VARCHAR(100) NOT NULL,
     tennis_player_a_id INT NOT NULL,
     tennis_player_b_id INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (tennis_player_a_id) REFERENCES TENNIS_PLAYER(id),
-    FOREIGN KEY (tennis_player_b_id) REFERENCES TENNIS_PLAYER(id)
+    FOREIGN KEY (tennis_player_b_id) REFERENCES TENNIS_PLAYER(id),
+    FOREIGN KEY (tennis_tournament_id) REFERENCES tennis_tournament(id)
 );
 
 CREATE TABLE tennis_match_license (
