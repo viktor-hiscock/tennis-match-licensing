@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
-public class CreateTennisTournamentLicenseRequestDTO {
+public class TennisTournamentLicenseRequestDTO {
     @NotNull
     private Long tennisTournamentId;
 
