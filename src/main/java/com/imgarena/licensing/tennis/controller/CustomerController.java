@@ -2,7 +2,6 @@ package com.imgarena.licensing.tennis.controller;
 
 import com.imgarena.licensing.tennis.dto.CreateCustomerRequestDTO;
 import com.imgarena.licensing.tennis.dto.CustomerResponseDTO;
-import com.imgarena.licensing.tennis.dto.UpdateCustomerRequestDTO;
 import com.imgarena.licensing.tennis.mapper.CustomerMapper;
 import com.imgarena.licensing.tennis.model.Customer;
 import com.imgarena.licensing.tennis.service.CustomerService;
@@ -42,9 +41,9 @@ public class CustomerController {
     @PutMapping("v1/customer/{customerId}")
     public ResponseEntity<CustomerResponseDTO> updateCustomer(
             @PathVariable("customerId") Long customerId,
-            @RequestBody UpdateCustomerRequestDTO updateCustomerRequestDTO
+            @RequestBody CreateCustomerRequestDTO createCustomerRequestDTO
     ) {
-        Customer updatedCustomer = customerService.updateCustomer(customerId, updateCustomerRequestDTO);
+        Customer updatedCustomer = customerService.updateCustomer(customerId, createCustomerRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(CustomerMapper.convertToCustomerResponseDTO(updatedCustomer));
     }

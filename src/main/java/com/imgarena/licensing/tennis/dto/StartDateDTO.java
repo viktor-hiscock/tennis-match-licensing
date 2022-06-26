@@ -12,6 +12,7 @@ public class StartDateDTO {
 
     @JsonFormat(pattern = TIMESTAMP_PATTERN)
     private String timestamp;
+
     @ZoneId
     private String zoneId;
 }

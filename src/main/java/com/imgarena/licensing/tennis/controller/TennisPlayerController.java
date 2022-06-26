@@ -2,7 +2,6 @@ package com.imgarena.licensing.tennis.controller;
 
 import com.imgarena.licensing.tennis.dto.CreateTennisPlayerRequestDTO;
 import com.imgarena.licensing.tennis.dto.TennisPlayerResponseDTO;
-import com.imgarena.licensing.tennis.dto.UpdateTennisPlayerRequestDTO;
 import com.imgarena.licensing.tennis.mapper.TennisPlayerMapper;
 import com.imgarena.licensing.tennis.model.TennisPlayer;
 import com.imgarena.licensing.tennis.service.TennisPlayerService;
@@ -43,9 +42,9 @@ public class TennisPlayerController {
     @PutMapping("v1/tennis/player/{tennisPlayerId}")
     public ResponseEntity<TennisPlayerResponseDTO> updateTennisPlayer(
             @PathVariable(value = "tennisPlayerId") Long tennisPlayerId,
-            @RequestBody @Valid UpdateTennisPlayerRequestDTO updateTennisPlayerRequestDTO
+            @RequestBody @Valid CreateTennisPlayerRequestDTO createTennisPlayerRequestDTO
     ) {
-        TennisPlayer updatedTennisPlayer = tennisPlayerService.updateTennisPlayer(tennisPlayerId, updateTennisPlayerRequestDTO);
+        TennisPlayer updatedTennisPlayer = tennisPlayerService.updateTennisPlayer(tennisPlayerId, createTennisPlayerRequestDTO);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(TennisPlayerMapper.convertToTennisPlayerResponseDTO(updatedTennisPlayer));

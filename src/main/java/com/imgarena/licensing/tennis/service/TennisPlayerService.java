@@ -1,7 +1,6 @@
 package com.imgarena.licensing.tennis.service;
 
 import com.imgarena.licensing.tennis.dto.CreateTennisPlayerRequestDTO;
-import com.imgarena.licensing.tennis.dto.UpdateTennisPlayerRequestDTO;
 import com.imgarena.licensing.tennis.exception.TennisPlayerNotFoundException;
 import com.imgarena.licensing.tennis.model.TennisPlayer;
 import com.imgarena.licensing.tennis.repository.TennisPlayerRepository;
@@ -33,11 +32,11 @@ public class TennisPlayerService {
         return tennisPlayerRepository.save(newTennisPlayer);
     }
 
-    public TennisPlayer updateTennisPlayer(Long tennisPlayerId, UpdateTennisPlayerRequestDTO updateTennisPlayerRequestDTO) {
+    public TennisPlayer updateTennisPlayer(Long tennisPlayerId, CreateTennisPlayerRequestDTO createTennisPlayerRequestDTO) {
         TennisPlayer currentTennisPlayer = tennisPlayerRepository.findById(tennisPlayerId)
                 .orElseThrow(() -> new TennisPlayerNotFoundException(tennisPlayerId));
-        currentTennisPlayer.setFirstName(updateTennisPlayerRequestDTO.getFirstName());
-        currentTennisPlayer.setLastName(updateTennisPlayerRequestDTO.getLastName());
+        currentTennisPlayer.setFirstName(createTennisPlayerRequestDTO.getFirstName());
+        currentTennisPlayer.setLastName(createTennisPlayerRequestDTO.getLastName());
         tennisPlayerRepository.save(currentTennisPlayer);
         return currentTennisPlayer;
     }

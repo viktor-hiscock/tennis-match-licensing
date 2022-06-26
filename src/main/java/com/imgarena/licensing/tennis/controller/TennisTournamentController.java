@@ -2,7 +2,6 @@ package com.imgarena.licensing.tennis.controller;
 
 import com.imgarena.licensing.tennis.dto.CreateTennisTournamentRequestDTO;
 import com.imgarena.licensing.tennis.dto.TennisTournamentResponseDTO;
-import com.imgarena.licensing.tennis.dto.UpdateTennisTournamentRequestDTO;
 import com.imgarena.licensing.tennis.mapper.TennisTournamentMapper;
 import com.imgarena.licensing.tennis.model.TennisTournament;
 import com.imgarena.licensing.tennis.service.TennisTournamentService;
@@ -43,9 +42,9 @@ public class TennisTournamentController {
     @PutMapping("v1/tennis/tournament/{tennisTournamentId}")
     public ResponseEntity<TennisTournamentResponseDTO> updateTennisPlayer(
             @PathVariable("tennisTournamentId") Long tennisTournamentId,
-            @RequestBody UpdateTennisTournamentRequestDTO updateTennisTournamentRequestDTO
+            @RequestBody CreateTennisTournamentRequestDTO createTennisTournamentRequestDTO
     ) {
-        TennisTournament tennisTournament = tennisTournamentService.updateTennisTournament(tennisTournamentId, updateTennisTournamentRequestDTO);
+        TennisTournament tennisTournament = tennisTournamentService.updateTennisTournament(tennisTournamentId, createTennisTournamentRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(TennisTournamentMapper.convertToTennisTournamentResponseDTO(tennisTournament));
     }

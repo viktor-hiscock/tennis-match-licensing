@@ -1,7 +1,6 @@
 package com.imgarena.licensing.tennis.service;
 
 import com.imgarena.licensing.tennis.dto.CreateTennisMatchRequestDTO;
-import com.imgarena.licensing.tennis.dto.UpdateTennisMatchRequestDTO;
 import com.imgarena.licensing.tennis.exception.TennisMatchNotFoundException;
 import com.imgarena.licensing.tennis.model.TennisMatch;
 import com.imgarena.licensing.tennis.model.TennisPlayer;
@@ -46,13 +45,13 @@ public class TennisMatchService {
     }
 
     @Transactional
-    public TennisMatch updateTennisMatch(Long matchId, UpdateTennisMatchRequestDTO updateTennisMatchRequestDTO) {
+    public TennisMatch updateTennisMatch(Long matchId, CreateTennisMatchRequestDTO createTennisMatchRequestDTO) {
         TennisMatch managedTennisMatch = tennisMatchRepository.findById(matchId)
                 .orElseThrow(() -> new TennisMatchNotFoundException(matchId));
-        managedTennisMatch.setPlayerA(tennisPlayerService.getTennisPlayer(updateTennisMatchRequestDTO.getTennisPlayerAId()));
-        managedTennisMatch.setPlayerB(tennisPlayerService.getTennisPlayer(updateTennisMatchRequestDTO.getTennisPlayerBId()));
-        managedTennisMatch.setStartDate(LocalDateTime.parse(updateTennisMatchRequestDTO.getStartDate().getTimestamp()));
-        managedTennisMatch.setZoneId(Optional.ofNullable(updateTennisMatchRequestDTO.getStartDate().getZoneId())
+        managedTennisMatch.setPlayerA(tennisPlayerService.getTennisPlayer(createTennisMatchRequestDTO.getTennisPlayerAId()));
+        managedTennisMatch.setPlayerB(tennisPlayerService.getTennisPlayer(createTennisMatchRequestDTO.getTennisPlayerBId()));
+        managedTennisMatch.setStartDate(LocalDateTime.parse(createTennisMatchRequestDTO.getStartDate().getTimestamp()));
+        managedTennisMatch.setZoneId(Optional.ofNullable(createTennisMatchRequestDTO.getStartDate().getZoneId())
                 .map(ZoneId::of)
                 .orElse(ZoneId.of("UTC")));
         return managedTennisMatch;

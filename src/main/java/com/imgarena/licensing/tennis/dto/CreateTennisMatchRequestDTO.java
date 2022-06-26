@@ -13,7 +13,9 @@ public class CreateTennisMatchRequestDTO {
     @NotNull
     private StartDateDTO startDate;
 
+    @NotNull
     private Long tennisPlayerAId;
 
+    @NotNull
     private Long tennisPlayerBId;
 }
