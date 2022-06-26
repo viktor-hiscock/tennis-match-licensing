@@ -63,11 +63,10 @@ public class CustomerController {
     public ResponseEntity<List<CustomerResponseDTO>> getAllCustomers(
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(name = "summaryType", defaultValue = "AvB") String summaryType
     ) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(customerService.getAllCustomers(pageNumber, pageSize, sortBy).stream()
+                .body(customerService.getAllCustomers(pageNumber, pageSize).stream()
                         .map(customer -> CustomerMapper.convertToCustomerResponseDTO(customer, TennisMatchSummaryType.fromName(summaryType)))
                         .collect(Collectors.toList()));
     }

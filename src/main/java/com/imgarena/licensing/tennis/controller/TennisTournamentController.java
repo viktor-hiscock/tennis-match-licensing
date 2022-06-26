@@ -59,11 +59,10 @@ public class TennisTournamentController {
     @GetMapping("v1/tennis/tournament")
     public ResponseEntity<List<TennisTournamentResponseDTO>> getTennisTournaments(
             @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "id") String sortBy
+            @RequestParam(defaultValue = "10") int pageSize
     ) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(tennisTournamentService.getAllTennisTournaments(pageNumber, pageSize, sortBy).stream()
+                .body(tennisTournamentService.getAllTennisTournaments(pageNumber, pageSize).stream()
                         .map(TennisTournamentMapper::convertToTennisTournamentResponseDTO)
                         .collect(Collectors.toList()));
     }

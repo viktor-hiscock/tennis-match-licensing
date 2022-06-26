@@ -47,11 +47,10 @@ public class TennisTournamentLicenseController {
     @GetMapping("v1/license/tennis/tournament")
     public ResponseEntity<List<TennisTournamentLicenseResponseDTO>> getAllTennisTournamentLicenses(
             @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "id") String sortBy
+            @RequestParam(defaultValue = "10") int pageSize
     ) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(tennisTournamentLicenseService.getAllTennisTournamentLicenses(pageNumber, pageSize, sortBy).stream()
+                .body(tennisTournamentLicenseService.getAllTennisTournamentLicenses(pageNumber, pageSize).stream()
                         .map(TennisTournamentLicenseMapper::convertToTennisTournamentLicenseResponseDTO)
                         .collect(Collectors.toList()));
     }

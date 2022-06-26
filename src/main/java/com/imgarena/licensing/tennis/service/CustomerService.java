@@ -7,14 +7,9 @@ import com.imgarena.licensing.tennis.model.TennisMatchLicense;
 import com.imgarena.licensing.tennis.model.TennisTournamentLicense;
 import com.imgarena.licensing.tennis.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +21,7 @@ public class CustomerService {
     private final TennisMatchLicenseService tennisMatchLicenseService;
     private final TennisTournamentLicenseService tennisTournamentLicenseService;
     private final CustomerRepository customerRepository;
+    private final PaginationService<Customer> customerPaginationService;
 
     public Customer getCustomer(Long customerId) {
         return customerRepository.findById(customerId)
@@ -56,8 +52,7 @@ public class CustomerService {
     }
 
     public Customer updateCustomer(Long customerId, CustomerRequestDTO customerRequestDTO) {
-        Customer currentCustomer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new CustomerNotFoundException(customerId));
+        Customer currentCustomer = getCustomer(customerId);
         List<TennisMatchLicense> tennisMatchLicenses = customerRequestDTO.getTennisMatchLicenseIds().stream()
                 .map(tennisMatchLicenseService::getTennisMatchLicense)
                 .collect(Collectors.toList());
@@ -73,23 +68,12 @@ public class CustomerService {
     }
 
     public Customer deleteCustomer(Long customerId) {
-        Optional<Customer> customerToDelete = customerRepository.findById(customerId);
-        if (customerToDelete.isPresent()) {
-            customerRepository.delete(customerToDelete.get());
-        } else {
-            throw new CustomerNotFoundException(customerId);
-        }
-        return customerToDelete.get();
+        Customer customerToDelete = getCustomer(customerId);
+        customerRepository.delete(customerToDelete);
+        return customerToDelete;
     }
 
-    public List<Customer> getAllCustomers(int pageNumber, int pageSize, String sortBy) {
-        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
-        Page<Customer> pagedResult = customerRepository.findAll(paging);
-
-        if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
-        } else {
-            return new ArrayList<>();
-        }
+    public List<Customer> getAllCustomers(int pageNumber, int pageSize) {
+        return customerPaginationService.getPaginatedRecords(pageNumber, pageSize, customerRepository);
     }
 }

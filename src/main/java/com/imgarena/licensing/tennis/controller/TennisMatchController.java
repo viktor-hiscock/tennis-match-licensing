@@ -2,7 +2,6 @@ package com.imgarena.licensing.tennis.controller;
 
 import com.imgarena.licensing.tennis.dto.TennisMatchRequestDTO;
 import com.imgarena.licensing.tennis.dto.TennisMatchResponseDTO;
-import com.imgarena.licensing.tennis.dto.TennisMatchSummaryType;
 import com.imgarena.licensing.tennis.mapper.TennisMatchMapper;
 import com.imgarena.licensing.tennis.model.TennisMatch;
 import com.imgarena.licensing.tennis.service.TennisMatchService;
@@ -60,11 +59,10 @@ public class TennisMatchController {
     @GetMapping("v1/tennis/match")
     public ResponseEntity<List<TennisMatchResponseDTO>> getAllTennisMatches(
             @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "id") String sortBy
+            @RequestParam(defaultValue = "10") int pageSize
     ) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(tennisMatchService.getAllTennisMatches(pageNumber, pageSize, sortBy).stream()
+                .body(tennisMatchService.getAllTennisMatches(pageNumber, pageSize).stream()
                         .map(TennisMatchMapper::convertToTennisMatchResponseDTO)
                         .collect(Collectors.toList()));
     }

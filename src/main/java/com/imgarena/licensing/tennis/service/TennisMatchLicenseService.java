@@ -6,21 +6,16 @@ import com.imgarena.licensing.tennis.model.TennisMatch;
 import com.imgarena.licensing.tennis.model.TennisMatchLicense;
 import com.imgarena.licensing.tennis.repository.TennisMatchLicenseRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class TennisMatchLicenseService {
     private final TennisMatchService tennisMatchService;
     private final TennisMatchLicenseRepository tennisMatchLicenseRepository;
+    private final PaginationService<TennisMatchLicense> tennisMatchLicensePaginationService;
 
     public TennisMatchLicense getTennisMatchLicense(Long tennisMatchLicenseId) {
         return tennisMatchLicenseRepository.findById(tennisMatchLicenseId)
@@ -36,23 +31,12 @@ public class TennisMatchLicenseService {
     }
 
     public TennisMatchLicense deleteTennisMatchLicense(Long tennisMatchLicenseId) {
-        Optional<TennisMatchLicense> tennisMatchLicenseToDelete = tennisMatchLicenseRepository.findById(tennisMatchLicenseId);
-        if (tennisMatchLicenseToDelete.isPresent()) {
-            tennisMatchLicenseRepository.delete(tennisMatchLicenseToDelete.get());
-        } else {
-            throw new TennisMatchLicenseNotFoundException(tennisMatchLicenseId);
-        }
-        return tennisMatchLicenseToDelete.get();
+        TennisMatchLicense tennisMatchLicenseToDelete = getTennisMatchLicense(tennisMatchLicenseId);
+        tennisMatchLicenseRepository.delete(tennisMatchLicenseToDelete);
+        return tennisMatchLicenseToDelete;
     }
 
-    public List<TennisMatchLicense> getAllTennisMatchLicenses(int pageNumber, int pageSize, String sortBy) {
-        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
-        Page<TennisMatchLicense> pagedResult = tennisMatchLicenseRepository.findAll(paging);
-
-        if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
-        } else {
-            return new ArrayList<>();
-        }
+    public List<TennisMatchLicense> getAllTennisMatchLicenses(int pageNumber, int pageSize) {
+        return tennisMatchLicensePaginationService.getPaginatedRecords(pageNumber, pageSize, tennisMatchLicenseRepository);
     }
 }

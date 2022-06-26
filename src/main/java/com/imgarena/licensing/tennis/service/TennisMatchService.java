@@ -6,16 +6,11 @@ import com.imgarena.licensing.tennis.model.TennisMatch;
 import com.imgarena.licensing.tennis.model.TennisPlayer;
 import com.imgarena.licensing.tennis.repository.TennisMatchRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +19,7 @@ import java.util.Optional;
 public class TennisMatchService {
     private final TennisPlayerService tennisPlayerService;
     private final TennisMatchRepository tennisMatchRepository;
+    private final PaginationService<TennisMatch> tennisMatchPaginationService;
 
     public TennisMatch getTennisMatch(Long tennisMatchId) {
         return tennisMatchRepository.findById(tennisMatchId)
@@ -46,35 +42,23 @@ public class TennisMatchService {
 
     @Transactional
     public TennisMatch updateTennisMatch(Long tennisMatchId, TennisMatchRequestDTO tennisMatchRequestDTO) {
-        TennisMatch managedTennisMatch = tennisMatchRepository.findById(tennisMatchId)
-                .orElseThrow(() -> new TennisMatchNotFoundException(tennisMatchId));
-        managedTennisMatch.setPlayerA(tennisPlayerService.getTennisPlayer(tennisMatchRequestDTO.getTennisPlayerAId()));
-        managedTennisMatch.setPlayerB(tennisPlayerService.getTennisPlayer(tennisMatchRequestDTO.getTennisPlayerBId()));
-        managedTennisMatch.setStartDate(LocalDateTime.parse(tennisMatchRequestDTO.getStartDate().getTimestamp()));
-        managedTennisMatch.setZoneId(Optional.ofNullable(tennisMatchRequestDTO.getStartDate().getZoneId())
+        TennisMatch currentTennisMatch = getTennisMatch(tennisMatchId);
+        currentTennisMatch.setPlayerA(tennisPlayerService.getTennisPlayer(tennisMatchRequestDTO.getTennisPlayerAId()));
+        currentTennisMatch.setPlayerB(tennisPlayerService.getTennisPlayer(tennisMatchRequestDTO.getTennisPlayerBId()));
+        currentTennisMatch.setStartDate(LocalDateTime.parse(tennisMatchRequestDTO.getStartDate().getTimestamp()));
+        currentTennisMatch.setZoneId(Optional.ofNullable(tennisMatchRequestDTO.getStartDate().getZoneId())
                 .map(ZoneId::of)
                 .orElse(ZoneId.of("UTC")));
-        return managedTennisMatch;
+        return currentTennisMatch;
     }
 
     public TennisMatch deleteTennisMatch(Long tennisMatchId) {
-        Optional<TennisMatch> tennisMatchToDelete = tennisMatchRepository.findById(tennisMatchId);
-        if (tennisMatchToDelete.isPresent()) {
-            tennisMatchRepository.delete(tennisMatchToDelete.get());
-        } else {
-            throw new TennisMatchNotFoundException(tennisMatchId);
-        }
-        return tennisMatchToDelete.get();
+        TennisMatch tennisMatchToDelete = getTennisMatch(tennisMatchId);
+        tennisMatchRepository.delete(tennisMatchToDelete);
+        return tennisMatchToDelete;
     }
 
-    public List<TennisMatch> getAllTennisMatches(int pageNumber, int pageSize, String sortBy) {
-        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
-        Page<TennisMatch> pagedResult = tennisMatchRepository.findAll(paging);
-
-        if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
-        } else {
-            return new ArrayList<>();
-        }
+    public List<TennisMatch> getAllTennisMatches(int pageNumber, int pageSize) {
+        return tennisMatchPaginationService.getPaginatedRecords(pageNumber, pageSize, tennisMatchRepository);
     }
 }
