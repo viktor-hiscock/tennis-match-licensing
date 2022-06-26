@@ -1,6 +1,7 @@
 package com.imgarena.licensing.tennis.service;
 
 import com.imgarena.licensing.tennis.dto.CreateTennisTournamentRequestDTO;
+import com.imgarena.licensing.tennis.dto.UpdateTennisTournamentRequestDTO;
 import com.imgarena.licensing.tennis.exception.TennisTournamentNotFoundException;
 import com.imgarena.licensing.tennis.model.TennisMatch;
 import com.imgarena.licensing.tennis.model.TennisTournament;
@@ -30,5 +31,15 @@ public class TennisTournamentService {
                 .tennisMatches(tennisMatches)
                 .build();
         return tennisTournamentRepository.save(newTennisTournament);
+    }
+
+    public TennisTournament updateTennisTournament(Long tennisTournamentId, UpdateTennisTournamentRequestDTO updateTennisTournamentRequestDTO) {
+        TennisTournament currentTennisTournament = tennisTournamentRepository.findById(tennisTournamentId)
+                .orElseThrow(() -> new TennisTournamentNotFoundException(tennisTournamentId));
+        List<TennisMatch> updatedTennisMatches = updateTennisTournamentRequestDTO.getTennisMatchIds().stream()
+                .map(tennisMatchService::getTennisMatch)
+                .collect(Collectors.toList());
+        currentTennisTournament.setTennisMatches(updatedTennisMatches);
+        return tennisTournamentRepository.save(currentTennisTournament);
     }
 }

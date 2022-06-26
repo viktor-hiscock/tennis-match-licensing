@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ import java.util.List;
 @Entity
 @Table(name = TableNames.TENNIS_TOURNAMENT)
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
