@@ -42,14 +42,4 @@ public class TennisMatch {
     @OneToOne
     @JoinColumn(name = "TENNIS_PLAYER_B_ID", referencedColumnName = "ID")
     private TennisPlayer playerB;
-
-    public TennisMatch merge(TennisMatch tennisMatch) {
-        return TennisMatch.builder()
-                .id(id)
-                .playerA(tennisMatch.getPlayerA())
-                .playerB(tennisMatch.getPlayerB())
-                .startDate(tennisMatch.getStartDate())
-                .zoneId(tennisMatch.getZoneId())
-                .build();
-    }
 }

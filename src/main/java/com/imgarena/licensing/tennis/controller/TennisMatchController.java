@@ -27,10 +27,10 @@ import java.util.stream.Collectors;
 public class TennisMatchController {
     private final TennisMatchService tennisMatchService;
 
-    @GetMapping("v1/tennis/match/{matchId}")
-    public ResponseEntity<TennisMatchResponseDTO> getTennisMatch(@PathVariable("matchId") Long matchId) {
+    @GetMapping("v1/tennis/match/{tennisMatchId}")
+    public ResponseEntity<TennisMatchResponseDTO> getTennisMatch(@PathVariable("tennisMatchId") Long tennisMatchId) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(TennisMatchMapper.convertToTennisMatchResponseDTO(tennisMatchService.getTennisMatch(matchId)));
+                .body(TennisMatchMapper.convertToTennisMatchResponseDTO(tennisMatchService.getTennisMatch(tennisMatchId)));
     }
 
     @PostMapping("v1/tennis/match")
@@ -40,19 +40,19 @@ public class TennisMatchController {
                 .body(TennisMatchMapper.convertToTennisMatchResponseDTO(createdTennisMatch));
     }
 
-    @PutMapping("v1/tennis/match/{matchId}")
+    @PutMapping("v1/tennis/match/{tennisMatchId}")
     public ResponseEntity<TennisMatchResponseDTO> updateTennisMatch(
-            @PathVariable("matchId") Long matchId,
+            @PathVariable("tennisMatchId") Long tennisMatchId,
             @RequestBody @Valid TennisMatchRequestDTO tennisMatchRequestDTO
     ) {
-        TennisMatch updatedTennisMatch = tennisMatchService.updateTennisMatch(matchId, tennisMatchRequestDTO);
+        TennisMatch updatedTennisMatch = tennisMatchService.updateTennisMatch(tennisMatchId, tennisMatchRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(TennisMatchMapper.convertToTennisMatchResponseDTO(updatedTennisMatch));
     }
 
-    @DeleteMapping("v1/tennis/match/{matchId}")
-    public ResponseEntity<TennisMatchResponseDTO> deleteTennisMatch(@PathVariable("matchId") Long matchId) {
-        TennisMatch deletedTennisMatch = tennisMatchService.deleteTennisMatch(matchId);
+    @DeleteMapping("v1/tennis/match/{tennisMatchId}")
+    public ResponseEntity<TennisMatchResponseDTO> deleteTennisMatch(@PathVariable("tennisMatchId") Long tennisMatchId) {
+        TennisMatch deletedTennisMatch = tennisMatchService.deleteTennisMatch(tennisMatchId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(TennisMatchMapper.convertToTennisMatchResponseDTO(deletedTennisMatch));
     }

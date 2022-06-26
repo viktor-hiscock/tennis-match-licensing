@@ -29,41 +29,34 @@ public class CustomerController {
     @GetMapping("v1/customer/{customerId}")
     public ResponseEntity<CustomerResponseDTO> getCustomer(
             @PathVariable("customerId") Long customerId,
-            @RequestParam(name = "summaryType") TennisMatchSummaryType summaryType
+            @RequestParam(name = "summaryType", defaultValue = "AvB") String summaryType
     ) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(CustomerMapper.convertToCustomerResponseDTO(customerService.getCustomer(customerId), summaryType));
+                .body(CustomerMapper.convertToCustomerResponseDTO(customerService.getCustomer(customerId), TennisMatchSummaryType.fromName(summaryType)));
     }
 
     @PostMapping("v1/customer")
-    public ResponseEntity<CustomerResponseDTO> createCustomer(
-            @RequestBody CustomerRequestDTO customerRequestDTO,
-            @RequestParam(name = "summaryType") TennisMatchSummaryType summaryType
-    ) {
+    public ResponseEntity<CustomerResponseDTO> createCustomer(@RequestBody CustomerRequestDTO customerRequestDTO) {
         Customer newCustomer = customerService.createCustomer(customerRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(CustomerMapper.convertToCustomerResponseDTO(newCustomer, summaryType));
+                .body(CustomerMapper.convertToCustomerResponseDTO(newCustomer));
     }
 
     @PutMapping("v1/customer/{customerId}")
     public ResponseEntity<CustomerResponseDTO> updateCustomer(
             @PathVariable("customerId") Long customerId,
-            @RequestBody CustomerRequestDTO customerRequestDTO,
-            @RequestParam(name = "summaryType") TennisMatchSummaryType summaryType
+            @RequestBody CustomerRequestDTO customerRequestDTO
     ) {
         Customer updatedCustomer = customerService.updateCustomer(customerId, customerRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(CustomerMapper.convertToCustomerResponseDTO(updatedCustomer, summaryType));
+                .body(CustomerMapper.convertToCustomerResponseDTO(updatedCustomer));
     }
 
     @DeleteMapping("v1/customer/{customerId}")
-    public ResponseEntity<CustomerResponseDTO> deleteCustomer(
-            @PathVariable("customerId") Long customerId,
-            @RequestParam(name = "summaryType") TennisMatchSummaryType summaryType
-    ) {
+    public ResponseEntity<CustomerResponseDTO> deleteCustomer(@PathVariable("customerId") Long customerId) {
         Customer deletedCustomer = customerService.deleteCustomer(customerId);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(CustomerMapper.convertToCustomerResponseDTO(deletedCustomer, summaryType));
+                .body(CustomerMapper.convertToCustomerResponseDTO(deletedCustomer));
     }
 
     @GetMapping("v1/customer")
@@ -71,11 +64,11 @@ public class CustomerController {
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "10") int pageSize,
             @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam(name = "summaryType") TennisMatchSummaryType summaryType
+            @RequestParam(name = "summaryType", defaultValue = "AvB") String summaryType
     ) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(customerService.getAllCustomers(pageNumber, pageSize, sortBy).stream()
-                        .map(customer -> CustomerMapper.convertToCustomerResponseDTO(customer, summaryType))
+                        .map(customer -> CustomerMapper.convertToCustomerResponseDTO(customer, TennisMatchSummaryType.fromName(summaryType)))
                         .collect(Collectors.toList()));
     }
 }

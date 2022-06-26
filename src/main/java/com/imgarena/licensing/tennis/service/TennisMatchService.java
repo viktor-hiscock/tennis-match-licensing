@@ -25,9 +25,9 @@ public class TennisMatchService {
     private final TennisPlayerService tennisPlayerService;
     private final TennisMatchRepository tennisMatchRepository;
 
-    public TennisMatch getTennisMatch(Long matchId) {
-        return tennisMatchRepository.findById(matchId)
-                .orElseThrow(() -> new TennisMatchNotFoundException(matchId));
+    public TennisMatch getTennisMatch(Long tennisMatchId) {
+        return tennisMatchRepository.findById(tennisMatchId)
+                .orElseThrow(() -> new TennisMatchNotFoundException(tennisMatchId));
     }
 
     public TennisMatch createTennisMatch(TennisMatchRequestDTO tennisMatchRequestDTO) {
@@ -45,9 +45,9 @@ public class TennisMatchService {
     }
 
     @Transactional
-    public TennisMatch updateTennisMatch(Long matchId, TennisMatchRequestDTO tennisMatchRequestDTO) {
-        TennisMatch managedTennisMatch = tennisMatchRepository.findById(matchId)
-                .orElseThrow(() -> new TennisMatchNotFoundException(matchId));
+    public TennisMatch updateTennisMatch(Long tennisMatchId, TennisMatchRequestDTO tennisMatchRequestDTO) {
+        TennisMatch managedTennisMatch = tennisMatchRepository.findById(tennisMatchId)
+                .orElseThrow(() -> new TennisMatchNotFoundException(tennisMatchId));
         managedTennisMatch.setPlayerA(tennisPlayerService.getTennisPlayer(tennisMatchRequestDTO.getTennisPlayerAId()));
         managedTennisMatch.setPlayerB(tennisPlayerService.getTennisPlayer(tennisMatchRequestDTO.getTennisPlayerBId()));
         managedTennisMatch.setStartDate(LocalDateTime.parse(tennisMatchRequestDTO.getStartDate().getTimestamp()));
@@ -57,12 +57,12 @@ public class TennisMatchService {
         return managedTennisMatch;
     }
 
-    public TennisMatch deleteTennisMatch(Long matchId) {
-        Optional<TennisMatch> tennisMatchToDelete = tennisMatchRepository.findById(matchId);
+    public TennisMatch deleteTennisMatch(Long tennisMatchId) {
+        Optional<TennisMatch> tennisMatchToDelete = tennisMatchRepository.findById(tennisMatchId);
         if (tennisMatchToDelete.isPresent()) {
             tennisMatchRepository.delete(tennisMatchToDelete.get());
         } else {
-            throw new TennisMatchNotFoundException(matchId);
+            throw new TennisMatchNotFoundException(tennisMatchId);
         }
         return tennisMatchToDelete.get();
     }

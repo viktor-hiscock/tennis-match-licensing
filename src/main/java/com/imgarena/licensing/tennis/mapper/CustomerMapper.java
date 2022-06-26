@@ -8,14 +8,22 @@ import com.imgarena.licensing.tennis.model.TennisMatchLicense;
 import com.imgarena.licensing.tennis.model.TennisTournament;
 import com.imgarena.licensing.tennis.model.TennisTournamentLicense;
 
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CustomerMapper {
+    public static CustomerResponseDTO convertToCustomerResponseDTO(Customer customer) {
+        Set<TennisMatch> deduplicatedTennisMatches = deduplicateTennisMatches(customer.getTennisMatchLicenses(), customer.getTennisTournamentLicenses());
+
+        return CustomerResponseDTO.builder()
+                .tennisMatches(deduplicatedTennisMatches.stream()
+                        .map(TennisMatchMapper::convertToTennisMatchResponseDTO)
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
     public static CustomerResponseDTO convertToCustomerResponseDTO(Customer customer, TennisMatchSummaryType tennisMatchSummaryType) {
         Set<TennisMatch> deduplicatedTennisMatches = deduplicateTennisMatches(customer.getTennisMatchLicenses(), customer.getTennisTournamentLicenses());
 

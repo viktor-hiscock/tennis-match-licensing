@@ -1,8 +1,8 @@
 package com.imgarena.licensing.tennis.exception;
 
 public class TennisMatchNotFoundException extends RuntimeException implements ResourceNotFoundException {
-    public TennisMatchNotFoundException(Long matchId) {
-        super(String.format("Tennis match %s does not exist", matchId));
+    public TennisMatchNotFoundException(Long tennisMatchId) {
+        super(String.format("Tennis match %s does not exist", tennisMatchId));
     }
 
     @Override

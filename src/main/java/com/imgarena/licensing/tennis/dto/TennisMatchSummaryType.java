@@ -1,9 +1,11 @@
 package com.imgarena.licensing.tennis.dto;
 
+import com.imgarena.licensing.tennis.exception.InvalidTennisMatchSummaryTypeException;
 import com.imgarena.licensing.tennis.model.TennisMatch;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 
 public enum TennisMatchSummaryType {
     AVB("AvB") {
@@ -32,11 +34,14 @@ public enum TennisMatchSummaryType {
         this.summaryType = summaryType;
     }
 
-    public String getSummaryType() {
-        return summaryType;
-    }
-
     public String getTennisMatchSummary(TennisMatch tennisMatch) {
         return "";
+    }
+
+    public static TennisMatchSummaryType fromName(String name) {
+        return Arrays.stream(TennisMatchSummaryType.values())
+                .filter(tennisMatchSummaryType -> name.equals(tennisMatchSummaryType.summaryType))
+                .findFirst()
+                .orElseThrow(() -> new InvalidTennisMatchSummaryTypeException(name));
     }
 }

@@ -21,7 +21,7 @@ public class TennisMatchMapper {
 
     private static TennisMatchResponseDTO.TennisMatchResponseDTOBuilder convertToTennisMatchResponseDTOBuilder(TennisMatch tennisMatch) {
         return TennisMatchResponseDTO.builder()
-                .matchId(tennisMatch.getId())
+                .tennisMatchId(tennisMatch.getId())
                 .tennisPlayerA(TennisPlayerMapper.convertToTennisPlayerResponseDTO(tennisMatch.getPlayerA()))
                 .tennisPlayerB(TennisPlayerMapper.convertToTennisPlayerResponseDTO(tennisMatch.getPlayerB()))
                 .startDate(StartDateDTO.builder()
