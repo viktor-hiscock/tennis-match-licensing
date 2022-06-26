@@ -1,6 +1,6 @@
 package com.imgarena.licensing.tennis.controller;
 
-import com.imgarena.licensing.tennis.dto.CreateTennisPlayerRequestDTO;
+import com.imgarena.licensing.tennis.dto.TennisPlayerRequestDTO;
 import com.imgarena.licensing.tennis.dto.TennisPlayerResponseDTO;
 import com.imgarena.licensing.tennis.mapper.TennisPlayerMapper;
 import com.imgarena.licensing.tennis.model.TennisPlayer;
@@ -32,8 +32,8 @@ public class TennisPlayerController {
     }
 
     @PostMapping("v1/tennis/player")
-    public ResponseEntity<TennisPlayerResponseDTO> createTennisPlayer(@RequestBody @Valid CreateTennisPlayerRequestDTO createTennisPlayerRequestDTO) {
-        TennisPlayer newTennisPlayer = tennisPlayerService.createTennisPlayer(createTennisPlayerRequestDTO);
+    public ResponseEntity<TennisPlayerResponseDTO> createTennisPlayer(@RequestBody @Valid TennisPlayerRequestDTO tennisPlayerRequestDTO) {
+        TennisPlayer newTennisPlayer = tennisPlayerService.createTennisPlayer(tennisPlayerRequestDTO);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(TennisPlayerMapper.convertToTennisPlayerResponseDTO(newTennisPlayer));
@@ -42,9 +42,9 @@ public class TennisPlayerController {
     @PutMapping("v1/tennis/player/{tennisPlayerId}")
     public ResponseEntity<TennisPlayerResponseDTO> updateTennisPlayer(
             @PathVariable(value = "tennisPlayerId") Long tennisPlayerId,
-            @RequestBody @Valid CreateTennisPlayerRequestDTO createTennisPlayerRequestDTO
+            @RequestBody @Valid TennisPlayerRequestDTO tennisPlayerRequestDTO
     ) {
-        TennisPlayer updatedTennisPlayer = tennisPlayerService.updateTennisPlayer(tennisPlayerId, createTennisPlayerRequestDTO);
+        TennisPlayer updatedTennisPlayer = tennisPlayerService.updateTennisPlayer(tennisPlayerId, tennisPlayerRequestDTO);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(TennisPlayerMapper.convertToTennisPlayerResponseDTO(updatedTennisPlayer));

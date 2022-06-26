@@ -1,6 +1,6 @@
 package com.imgarena.licensing.tennis.service;
 
-import com.imgarena.licensing.tennis.dto.CreateTennisPlayerRequestDTO;
+import com.imgarena.licensing.tennis.dto.TennisPlayerRequestDTO;
 import com.imgarena.licensing.tennis.exception.TennisPlayerNotFoundException;
 import com.imgarena.licensing.tennis.model.TennisPlayer;
 import com.imgarena.licensing.tennis.repository.TennisPlayerRepository;
@@ -24,19 +24,19 @@ public class TennisPlayerService {
                 .orElseThrow(() -> new TennisPlayerNotFoundException(tennisPlayerId));
     }
 
-    public TennisPlayer createTennisPlayer(CreateTennisPlayerRequestDTO createTennisPlayerRequestDTO) {
+    public TennisPlayer createTennisPlayer(TennisPlayerRequestDTO tennisPlayerRequestDTO) {
         TennisPlayer newTennisPlayer = TennisPlayer.builder()
-                .firstName(createTennisPlayerRequestDTO.getFirstName())
-                .lastName(createTennisPlayerRequestDTO.getLastName())
+                .firstName(tennisPlayerRequestDTO.getFirstName())
+                .lastName(tennisPlayerRequestDTO.getLastName())
                 .build();
         return tennisPlayerRepository.save(newTennisPlayer);
     }
 
-    public TennisPlayer updateTennisPlayer(Long tennisPlayerId, CreateTennisPlayerRequestDTO createTennisPlayerRequestDTO) {
+    public TennisPlayer updateTennisPlayer(Long tennisPlayerId, TennisPlayerRequestDTO tennisPlayerRequestDTO) {
         TennisPlayer currentTennisPlayer = tennisPlayerRepository.findById(tennisPlayerId)
                 .orElseThrow(() -> new TennisPlayerNotFoundException(tennisPlayerId));
-        currentTennisPlayer.setFirstName(createTennisPlayerRequestDTO.getFirstName());
-        currentTennisPlayer.setLastName(createTennisPlayerRequestDTO.getLastName());
+        currentTennisPlayer.setFirstName(tennisPlayerRequestDTO.getFirstName());
+        currentTennisPlayer.setLastName(tennisPlayerRequestDTO.getLastName());
         tennisPlayerRepository.save(currentTennisPlayer);
         return currentTennisPlayer;
     }

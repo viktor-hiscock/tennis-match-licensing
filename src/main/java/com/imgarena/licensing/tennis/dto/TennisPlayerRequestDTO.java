@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 @Builder
-public class CreateTennisPlayerRequestDTO {
+public class TennisPlayerRequestDTO {
     @NotBlank
     @Length(max = 100)
     private String firstName;
