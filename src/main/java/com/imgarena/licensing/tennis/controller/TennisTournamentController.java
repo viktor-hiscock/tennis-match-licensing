@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -43,5 +47,17 @@ public class TennisTournamentController {
         TennisTournament tennisTournament = tennisTournamentService.updateTennisTournament(tennisTournamentId, updateTennisTournamentRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(TennisTournamentMapper.convertToTennisTournamentResponseDTO(tennisTournament));
+    }
+
+    @GetMapping("v1/tennis/tournament")
+    public ResponseEntity<List<TennisTournamentResponseDTO>> getTennisTournaments(
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "id") String sortBy
+    ) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(tennisTournamentService.getAllTennisTournaments(pageNumber, pageSize, sortBy).stream()
+                        .map(TennisTournamentMapper::convertToTennisTournamentResponseDTO)
+                        .collect(Collectors.toList()));
     }
 }

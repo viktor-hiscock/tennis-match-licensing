@@ -7,8 +7,13 @@ import com.imgarena.licensing.tennis.model.TennisMatch;
 import com.imgarena.licensing.tennis.model.TennisTournament;
 import com.imgarena.licensing.tennis.repository.TennisTournamentRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,5 +46,16 @@ public class TennisTournamentService {
                 .collect(Collectors.toList());
         currentTennisTournament.setTennisMatches(updatedTennisMatches);
         return tennisTournamentRepository.save(currentTennisTournament);
+    }
+
+    public List<TennisTournament> getAllTennisTournaments(int pageNumber, int pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
+        Page<TennisTournament> pagedResult = tennisTournamentRepository.findAll(paging);
+
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<>();
+        }
     }
 }
