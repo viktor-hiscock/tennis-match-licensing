@@ -2,6 +2,7 @@ package com.imgarena.licensing.tennis.controller;
 
 import com.imgarena.licensing.tennis.dto.CustomerRequestDTO;
 import com.imgarena.licensing.tennis.dto.CustomerResponseDTO;
+import com.imgarena.licensing.tennis.dto.TennisMatchSummaryType;
 import com.imgarena.licensing.tennis.mapper.CustomerMapper;
 import com.imgarena.licensing.tennis.model.Customer;
 import com.imgarena.licensing.tennis.service.CustomerService;
@@ -26,44 +27,55 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping("v1/customer/{customerId}")
-    public ResponseEntity<CustomerResponseDTO> getCustomer(@PathVariable("customerId") Long customerId) {
+    public ResponseEntity<CustomerResponseDTO> getCustomer(
+            @PathVariable("customerId") Long customerId,
+            @RequestParam(name = "summaryType") TennisMatchSummaryType summaryType
+    ) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(CustomerMapper.convertToCustomerResponseDTO(customerService.getCustomer(customerId)));
+                .body(CustomerMapper.convertToCustomerResponseDTO(customerService.getCustomer(customerId), summaryType));
     }
 
     @PostMapping("v1/customer")
-    public ResponseEntity<CustomerResponseDTO> createCustomer(@RequestBody CustomerRequestDTO customerRequestDTO) {
+    public ResponseEntity<CustomerResponseDTO> createCustomer(
+            @RequestBody CustomerRequestDTO customerRequestDTO,
+            @RequestParam(name = "summaryType") TennisMatchSummaryType summaryType
+    ) {
         Customer newCustomer = customerService.createCustomer(customerRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(CustomerMapper.convertToCustomerResponseDTO(newCustomer));
+                .body(CustomerMapper.convertToCustomerResponseDTO(newCustomer, summaryType));
     }
 
     @PutMapping("v1/customer/{customerId}")
     public ResponseEntity<CustomerResponseDTO> updateCustomer(
             @PathVariable("customerId") Long customerId,
-            @RequestBody CustomerRequestDTO customerRequestDTO
+            @RequestBody CustomerRequestDTO customerRequestDTO,
+            @RequestParam(name = "summaryType") TennisMatchSummaryType summaryType
     ) {
         Customer updatedCustomer = customerService.updateCustomer(customerId, customerRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(CustomerMapper.convertToCustomerResponseDTO(updatedCustomer));
+                .body(CustomerMapper.convertToCustomerResponseDTO(updatedCustomer, summaryType));
     }
 
     @DeleteMapping("v1/customer/{customerId}")
-    public ResponseEntity<CustomerResponseDTO> deleteCustomer(@PathVariable("customerId") Long customerId) {
+    public ResponseEntity<CustomerResponseDTO> deleteCustomer(
+            @PathVariable("customerId") Long customerId,
+            @RequestParam(name = "summaryType") TennisMatchSummaryType summaryType
+    ) {
         Customer deletedCustomer = customerService.deleteCustomer(customerId);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(CustomerMapper.convertToCustomerResponseDTO(deletedCustomer));
+                .body(CustomerMapper.convertToCustomerResponseDTO(deletedCustomer, summaryType));
     }
 
     @GetMapping("v1/customer")
     public ResponseEntity<List<CustomerResponseDTO>> getAllCustomers(
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "id") String sortBy
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(name = "summaryType") TennisMatchSummaryType summaryType
     ) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(customerService.getAllCustomers(pageNumber, pageSize, sortBy).stream()
-                        .map(CustomerMapper::convertToCustomerResponseDTO)
+                        .map(customer -> CustomerMapper.convertToCustomerResponseDTO(customer, summaryType))
                         .collect(Collectors.toList()));
     }
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 @Builder
 public class TennisMatchResponseDTO {
     private Long matchId;
+    private String summary;
     private StartDateDTO startDate;
     private TennisPlayerResponseDTO tennisPlayerA;
     private TennisPlayerResponseDTO tennisPlayerB;

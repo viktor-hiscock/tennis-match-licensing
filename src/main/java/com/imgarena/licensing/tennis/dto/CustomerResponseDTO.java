@@ -8,11 +8,5 @@ import java.util.List;
 @Data
 @Builder
 public class CustomerResponseDTO {
-    private Long customerId;
-    private String firstName;
-    private String lastName;
-    private String dateOfBirth;
-    private String createdAt;
-    private List<TennisMatchLicenseResponseDTO> tennisMatchLicenses;
-    private List<TennisTournamentLicenseResponseDTO> tennisTournamentLicenses;
+    private List<TennisMatchResponseDTO> tennisMatches;
 }

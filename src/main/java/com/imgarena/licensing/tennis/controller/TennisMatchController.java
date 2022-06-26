@@ -2,6 +2,7 @@ package com.imgarena.licensing.tennis.controller;
 
 import com.imgarena.licensing.tennis.dto.TennisMatchRequestDTO;
 import com.imgarena.licensing.tennis.dto.TennisMatchResponseDTO;
+import com.imgarena.licensing.tennis.dto.TennisMatchSummaryType;
 import com.imgarena.licensing.tennis.mapper.TennisMatchMapper;
 import com.imgarena.licensing.tennis.model.TennisMatch;
 import com.imgarena.licensing.tennis.service.TennisMatchService;
